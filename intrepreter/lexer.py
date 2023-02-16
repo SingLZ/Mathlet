@@ -1,4 +1,7 @@
-from tokens import Token, TokenType
+from . import tokens
+#from tokens import Token, TokenType
+Token = tokens.Token
+TokenType = tokens.TokenType
 
 class Lexer():
 	def __init__(self, text: str):
@@ -32,7 +35,7 @@ class Lexer():
 			elif self.current_char == ')':
 				yield Token(TokenType.RPAREN)
 			#elif self.current_char.isalpha():
-				
+
 			else:
 				raise Exception(f"Illegal character '{self.current_char}'")
 			self.advance()

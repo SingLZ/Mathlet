@@ -1,8 +1,18 @@
-from tokens import TokenType
-from nodes import *
+from . import tokens
+from . import nodes
+
+Token = tokens.Token
+TokenType = tokens.TokenType
+NumberNode = nodes.NumberNode
+AddNode = nodes.AddNode
+SubtractNode = nodes.SubtractNode
+MultiplyNode = nodes.MultiplyNode
+DivideNode = nodes.DivideNode
+PlusNode = nodes.PlusNode
+MinusNode = nodes.MinusNode
 
 def Error():
-	raise SyntaxError
+	raise SyntaxError("Test")
 
 # grammar rule based parser using recursive descent style
 class Parser: 
