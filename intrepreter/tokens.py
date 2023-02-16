@@ -15,8 +15,11 @@ class TokenType(Enum):
     MINUS = 2,
     MULTIPLY = 3,
     DIVIDE = 4,
-    EXPONENT = 5,
-    MOD = 6
+    LPAREN = 5,
+    RPAREN = 6,
+    EXPONENT = 7,
+    MOD = 8,
+
 
 @dataclass
 class Token:
