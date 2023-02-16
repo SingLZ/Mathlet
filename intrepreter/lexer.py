@@ -1,7 +1,4 @@
-from . import tokens
-#from tokens import Token, TokenType
-Token = tokens.Token
-TokenType = tokens.TokenType
+from .tokens import Token, TokenType
 
 class Lexer():
 	def __init__(self, text: str):
@@ -19,26 +16,31 @@ class Lexer():
 	def generate_tokens(self):
 		while self.current_char != None:
 			if self.current_char.isspace():
-				pass # skip
+				self.advance()
 			elif self.current_char == '.' or self.current_char.isdigit():
 				yield self.generate_number()
 			elif self.current_char == '+':
+				self.advance()
 				yield Token(TokenType.PLUS)
 			elif self.current_char == '-':
+				self.advance()
 				yield Token(TokenType.MINUS)
 			elif self.current_char == '*':
+				self.advance()
 				yield Token(TokenType.MULTIPLY)
 			elif self.current_char == '/':
+				self.advance()
 				yield Token(TokenType.DIVIDE)
 			elif self.current_char == '(':
+				self.advance()
 				yield Token(TokenType.LPAREN)
 			elif self.current_char == ')':
+				self.advance()
 				yield Token(TokenType.RPAREN)
 			#elif self.current_char.isalpha():
 
 			else:
 				raise Exception(f"Illegal character '{self.current_char}'")
-			self.advance()
 
 	def generate_number(self):
 		decimal_flag = False
@@ -48,14 +50,14 @@ class Lexer():
 		while self.current_char != None and (self.current_char == "." or self.current_char.isdigit()):
 			if self.current_char == ".":
 				if decimal_flag:
-					raise Exception("Multiple decimal points in one number.")
+					break
 				decimal_flag = True
-				number_str += self.current_char
-				self.advance()
+			num_str += self.current_char
+			self.advance()
 
-		if number_str.startswith('.'):
-			number_str = '0' + number_str
-		if number_str.endswith('.'):
-			number_str += '0'
+		if num_str.startswith('.'):
+			num_str = '0' + num_str
+		if num_str.endswith('.'):
+			num_str += '0'
 		
-		return Token(TokenType.NUMBER, float(number_str))
+		return Token(TokenType.NUMBER, float(num_str))

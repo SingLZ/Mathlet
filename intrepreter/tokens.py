@@ -20,7 +20,6 @@ class TokenType(Enum):
     EXPONENT = 7,
     MOD = 8,
 
-
 @dataclass
 class Token:
 	type: TokenType

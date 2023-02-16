@@ -1,18 +1,8 @@
-from . import tokens
-from . import nodes
+from .tokens import TokenType
+from .nodes import *
 
-Token = tokens.Token
-TokenType = tokens.TokenType
-NumberNode = nodes.NumberNode
-AddNode = nodes.AddNode
-SubtractNode = nodes.SubtractNode
-MultiplyNode = nodes.MultiplyNode
-DivideNode = nodes.DivideNode
-PlusNode = nodes.PlusNode
-MinusNode = nodes.MinusNode
-
-def Error():
-	raise SyntaxError("Test")
+def Error(msg: str = None):
+	raise msg != None and Exception(msg) or Exception
 
 # grammar rule based parser using recursive descent style
 class Parser: 
@@ -31,7 +21,12 @@ class Parser:
 			return None
 		result = self.expr()
 		if self.current_token != None: # expect nothing remains when fully parsed
-			Error()
+			currentTokenType: TokenType = self.current_token.type
+			if currentTokenType == TokenType.LPAREN: # special for printing
+				currentTokenType = "("
+			elif currentTokenType == TokenType.RPAREN:
+				currentTokenType = ")"
+			Error(f"Extra tokens unprocessed, token: '{currentTokenType}'.")
 		return result
 	
 	def expr(self):
@@ -63,12 +58,17 @@ class Parser:
 	def factor(self):
 		token = self.current_token
 
+		if not token:
+			Error("Misformed expression, operators may be incomplete.")
+
 		if token.type == TokenType.LPAREN:
 			self.advance()
 			result = self.expr()
 
-			if self.current_token.type != TokenType.RPAREN:
-				Error()
+			if not self.current_token: # player didn't provide a right parenthesis
+				Error("Expected ')', got nothing at the end")
+			elif self.current_token.type != TokenType.RPAREN:
+				Error("Never reached ')'")
 			
 			self.advance()
 			return result
