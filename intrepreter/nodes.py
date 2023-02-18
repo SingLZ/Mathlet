@@ -6,6 +6,9 @@ class NumberNode:
 
 	def __repr__(self):
 		return f"{self.value}"
+	
+	def __neg__(self):
+		return NumberNode(-self.value)
 
 @dataclass
 class AddNode:
