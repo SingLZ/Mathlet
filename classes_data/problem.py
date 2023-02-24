@@ -17,10 +17,27 @@ class Problem(ABC):
     
     def isDone(self):
         return self.CurrentStep == len(self.Steps)
+    
+    def __repr__(self):
+        string = self.Equation
+        for step in self.Steps:
+            string += "\n" + step
+        string += "\n" + self.Answer
+        return string
+
+import random
+def randomize():
+    firstTerm = str(random.randint(1, 10)) # coefficient
+    secondTerm = str(random.randint(1, 10)) # constant
+    result = (6 - float(secondTerm)) / float(firstTerm)
+    randomizedProblem = Problem(firstTerm + "x + " + secondTerm + " = 6", ['- ' + secondTerm, '/ ' + firstTerm], 'PreSchool', 'x = ' + str(result))
+    return randomizedProblem
 
 def manufactureArithmeticProblem():
     problem = Problem("2x + 3 = 7", [("-3", "2x + 3 - 3 = 7 - 3", "2x = 7 - 3", "2x = 4"), ("/2", "x = 4/2")], 'PreSchool', "x = 2")
     return problem
+
+print(randomize())
 
 # sample problem
 if __name__ == "__main__":
