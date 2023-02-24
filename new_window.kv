@@ -1,0 +1,142 @@
+# write screens here 
+WindowManager:
+    LevelWindow:
+    Elementary:
+    MiddleSchool:
+    HighSchool:
+    College:
+
+<LevelWindow>:
+    # making the choose your level screen 
+    name: "home"
+
+    # making four buttons 
+    BoxLayout:
+        orientation: "vertical"
+        padding: "30dp"
+        spacing: "10dp"
+        size: root.width, root.height
+
+        Label:
+            markup: True
+            text: "[b]Choose Your Level[/b]"
+            halign: 'center'
+            valign: 'center'
+            color: (0,0,0,1)
+            size_hint: (1,0.2)
+            font_size: 30
+        
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: "10dp"
+    
+            RoundedButton:
+                text: "Elementary\nMath"
+                font_size: 20
+                #background color not needed because the color is declared in <RoundedButtons>
+                #background_color: (25/255,44/255,132/255,1)
+                #background_normal: ''
+                # click on button and it will change to a new screen
+                on_release:
+                    app.root.current = "elementary"
+                    root.manager.transition.direction = "left"
+
+            RoundedButton:
+                text: "MiddleSchool\nMath"
+                font_size: 20
+                on_release:
+                    app.root.current = "middleSchool"
+                    root.manager.transition.direction = "left"
+
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: "10dp"
+    
+            RoundedButton:
+                text: "High School\nMath"
+                font_size: 20
+                on_release:
+                    app.root.current = "highSchool"
+                    root.manager.transition.direction = "left"
+
+            RoundedButton:
+                text: "College\nMath"
+                font_size: 20
+                on_release:
+                    app.root.current = "college"
+                    root.manager.transition.direction = "left"
+
+# making rounded buttons
+<RoundedButton@Button>
+    background_color:(0,0,0,0)
+    background_normal: ''
+    # canvas is a container for instructions. Use canvas.before to add instructions rendered before with self. 
+    canvas.before:
+        Color:
+            rgba: (25/255,44/255,132/255,0.8)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            # change radius to change roundness of the button
+            radius: [28]
+
+# make other screens
+<Elementary>:
+    # screen for elementary math 
+    name: "elementary"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+    
+    Button:
+        text: "Go Back"
+        font_size: 20
+        on_release: 
+            app.root.current = "home"
+            root.manager.transition.direction = "right"
+
+<MiddleSchool>:
+    # screen for middle school math 
+    name: "middleSchool"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+    
+    Button:
+        text: "Go Back"
+        font_size: 20
+        on_release: 
+            app.root.current = "home"
+            root.manager.transition.direction = "right"
+
+<HighSchool>:
+    # screen for high school math 
+    name: "highSchool"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+    
+    Button:
+        text: "Go Back"
+        font_size: 20
+        on_release: 
+            app.root.current = "home"
+            root.manager.transition.direction = "right"
+
+<College>:
+    # screen for college math 
+    name: "college"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+    
+    Button:
+        text: "Go Back"
+        font_size: 20
+        on_release: 
+            app.root.current = "home"
+            root.manager.transition.direction = "right"
