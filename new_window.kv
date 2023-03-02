@@ -1,0 +1,228 @@
+# write screens here 
+WindowManager:
+    LevelWindow:
+    Elementary:
+    MiddleSchool:
+    HighSchool:
+    College:
+
+<LevelWindow>:
+    # making the choose your level screen 
+    name: "home"
+
+    # making four buttons 
+    BoxLayout:
+        orientation: "vertical"
+        padding: "30dp"
+        spacing: "10dp"
+        size: root.width, root.height
+
+        Label:
+            markup: True
+            text: "[b]Choose Your Level[/b]"
+            halign: 'center'
+            valign: 'center'
+            color: (0,0,0,1)
+            size_hint: (1,0.2)
+            font_size: 30
+        
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: "10dp"
+    
+            RoundedButton:
+                text: "Elementary\nMath"
+                font_size: 20
+                halign: 'center'
+                valign: 'center'
+                #background color not needed because the color is declared in <RoundedButtons>
+                #background_color: (25/255,44/255,132/255,1)
+                #background_normal: ''
+                # click on button and it will change to a new screen
+                on_release:
+                    app.root.current = "elementary"
+                    root.manager.transition.direction = "left"
+
+            RoundedButton:
+                text: "Middle School\nMath"
+                font_size: 20
+                halign: 'center'
+                valign: 'center'
+                on_release:
+                    app.root.current = "middleSchool"
+                    root.manager.transition.direction = "left"
+
+        BoxLayout:
+            orientation: "horizontal"
+            spacing: "10dp"
+    
+            RoundedButton:
+                text: "High School\nMath"
+                font_size: 20
+                halign: 'center'
+                valign: 'center'
+                on_release:
+                    app.root.current = "highSchool"
+                    root.manager.transition.direction = "left"
+
+            RoundedButton:
+                text: "College\nMath"
+                font_size: 20
+                halign: 'center'
+                valign: 'center'
+                on_release:
+                    app.root.current = "college"
+                    root.manager.transition.direction = "left"
+
+# making rounded buttons for the levels of Math
+<RoundedButton@Button>
+    background_color:(0,0,0,0)
+    background_normal: ''
+    # canvas is a container for instructions. Use canvas.before to add instructions rendered before with self. 
+    canvas.before:
+        Color:
+            rgba: (25/255,44/255,132/255,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            # change radius to change roundness of the button
+            radius: [28]
+
+# making rounded buttons for the topics
+<RoundedButtonForTopic@Button>
+    background_color:(0,0,0,0)
+    background_normal: ''
+    # canvas is a container for instructions. Use canvas.before to add instructions rendered before with self. 
+    canvas.before:
+        Color:
+            rgba: (76/255,92/255,165/255,0.8)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            # change radius to change roundness of the button
+            radius: [48]
+
+# make other screens
+<Elementary>:
+    # screen for elementary math 
+    name: "elementary"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: "30dp"
+        spacing: "10dp"
+    
+        Button:
+            text: "Go Back"
+            pos_hint: {'left': 1, 'top': 1}
+            size_hint: (0.22,0.22)
+            font_size: 14
+            on_release: 
+                app.root.current = "home"
+                root.manager.transition.direction = "right"
+
+        RoundedButtonForTopic:
+            text: "Perimeter and Shape"
+            font_size: 20
+            #connect this button to card layout 
+            on_release:
+
+        RoundedButtonForTopic:
+            text: "Rounding Whole Numbers"
+            font_size: 20
+            #connect this button to card layout 
+            on_release:
+
+<MiddleSchool>:
+    # screen for middle school math 
+    name: "middleSchool"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: "30dp"
+        spacing: "10dp"
+    
+        Button:
+            text: "Go Back"
+            pos_hint: {'left': 1, 'top': 1}
+            size_hint: (0.22,0.22)
+            font_size: 14
+            on_release: 
+                app.root.current = "home"
+                root.manager.transition.direction = "right"
+
+        RoundedButtonForTopic:
+            text: "Fractions"
+            font_size: 20
+            #connect this button to card layout 
+            on_release:
+
+        RoundedButtonForTopic:
+            text: "Solving Equations With\nOne Unknown"
+            font_size: 20
+            #connect this button to card layout 
+            on_release:
+
+<HighSchool>:
+    # screen for high school math 
+    name: "highSchool"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: "30dp"
+        spacing: "10dp"
+    
+        Button:
+            text: "Go Back"
+            pos_hint: {'left': 1, 'top': 1}
+            size_hint: (0.22,0.22)
+            font_size: 14
+            on_release: 
+                app.root.current = "home"
+                root.manager.transition.direction = "right"
+
+        RoundedButtonForTopic:
+            text: "Quadratic Equations\nwith Complex Solutions"
+            font_size: 20
+            #connect this button to card layout 
+            on_release:
+
+        RoundedButtonForTopic:
+            text: "Logarithms"
+            font_size: 20
+            #connect this button to card layout 
+            on_release:
+
+<College>:
+    # screen for college math 
+    name: "college"
+
+    BoxLayout:
+        orientation: "vertical"
+        size: root.width, root.height
+        padding: "30dp"
+        spacing: "10dp"
+    
+        Button:
+            text: "Go Back"
+            pos_hint: {'left': 1, 'top': 1}
+            size_hint: (0.22,0.22)
+            font_size: 14
+            on_release: 
+                app.root.current = "home"
+                root.manager.transition.direction = "right"
+
+        RoundedButtonForTopic:
+            text: "Derivatives"
+            font_size: 20
+            #connect this button to card layout 
+            on_release:
+
+        RoundedButtonForTopic:
+            text: "Integrals"
+            font_size: 20
+            #connect this button to card layout 
+            on_release:
