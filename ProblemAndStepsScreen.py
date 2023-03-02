@@ -23,7 +23,8 @@ class WindowManager(ScreenManager):
     pass
 
 #oneFour = Builder.load_file('OneFourProblemCards.kv')
-twoTwo = Builder.load_file('TwoTwoProblemCards.kv')
+#twoTwo = Builder.load_file('TwoTwoProblemCards.kv')
+fourOne = Builder.load_file('FourOneProblemCards.kv')
 #kv = Builder.load_file('new_window.kv')
 
 class TwoTwoProblemCardsApp(App):
@@ -35,21 +36,26 @@ class OneFourProblemCardsApp(App):
     def build(self):
         Window.clearcolor = (255, 255, 255)
         return oneFour 
+    
+class FourOneProblemCardsApp(App):
+    def build(self):
+        Window.clearcolor = (255, 255, 255)
+        return fourOne 
 
 if __name__ == '__main__':
-    TwoTwoProblemCardsApp().run()
+    FourOneProblemCardsApp().run()
 
 '''
 Note for testing:
-    Change line 40 to 
+    Change line 46 to 
     TwoTwoProblemCardsApp().run() or
     OneFourProblemCardsApp().run()
     and
-    Comment out lines 25 or 26 depending on which
+    Comment out lines 25/26/27 depending on which
     file you want to check and uncomment the other
     line
 
     For example, if we want to see the Two/Two
-    format, switch line 40 to TwoTwoProblemCardsApp().run()
-    and comment out line 25 and uncomment line 26
+    format, switch line 46 to TwoTwoProblemCardsApp().run()
+    and comment out line 25 and 27 and uncomment line 26
 '''
