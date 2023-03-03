@@ -1,6 +1,6 @@
 import kivy
 kivy.require('2.1.0')
-
+  
 from kivy.app import App
 from kivy.uix.widget import Widget
 from kivy.uix.boxlayout import BoxLayout
@@ -17,7 +17,7 @@ class GridLayoutEx(GridLayout):
     strA = StringProperty("A")
     strB = StringProperty("B")
     def on_button_click(self):
-        self.ids.equation.text = "AAAAAA"
+        self.ids.equation.text = "ppfewaov"
         self.strA = "Feedback Here!"
     def clicked(self):
         self.strB = "Another feedback"
