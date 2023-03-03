@@ -7,6 +7,9 @@ from kivy.metrics import dp
 from kivy.core.window import Window
 from kivy.lang import Builder
 from kivy.properties import StringProperty
+from kivy.config import Config
+Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
+
 
 class ProblemCards(Screen):
     strA = StringProperty("A")
@@ -22,40 +25,12 @@ class ProblemCards(Screen):
 class WindowManager(ScreenManager):
     pass
 
-#oneFour = Builder.load_file('OneFourProblemCards.kv')
-#twoTwo = Builder.load_file('TwoTwoProblemCards.kv')
-fourOne = Builder.load_file('FourOneProblemCards.kv')
-#kv = Builder.load_file('new_window.kv')
+twoTwo = Builder.load_file('TwoTwoProblemCards.kv')
 
 class TwoTwoProblemCardsApp(App):
     def build(self):
         Window.clearcolor = (255, 255, 255)
         return twoTwo
-    
-class OneFourProblemCardsApp(App):
-    def build(self):
-        Window.clearcolor = (255, 255, 255)
-        return oneFour 
-    
-class FourOneProblemCardsApp(App):
-    def build(self):
-        Window.clearcolor = (255, 255, 255)
-        return fourOne 
 
 if __name__ == '__main__':
-    FourOneProblemCardsApp().run()
-
-'''
-Note for testing:
-    Change line 46 to 
-    TwoTwoProblemCardsApp().run() or
-    OneFourProblemCardsApp().run()
-    and
-    Comment out lines 25/26/27 depending on which
-    file you want to check and uncomment the other
-    line
-
-    For example, if we want to see the Two/Two
-    format, switch line 46 to TwoTwoProblemCardsApp().run()
-    and comment out line 25 and 27 and uncomment line 26
-'''
+    TwoTwoProblemCardsApp().run()
