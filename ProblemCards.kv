@@ -1,3 +1,9 @@
+# NOTE THIS IS THE 2x2 Problem Layout
+
+# for back button on ProblemCards.kv to return to previous screen
+<Screen>:
+    on_leave: app.previous_screen = self.name
+
 WindowManager:
     ProblemCards:
 
@@ -21,7 +27,7 @@ WindowManager:
             font_size: 14
             on_release: 
                 # rooting this to the elementary topics screen for now since we are only working on completing Elementary for our MVP
-                app.root.current = "elementary"
+                app.root.current = app.previous_screen
                 root.manager.transition.direction = "right"
 
         # using disabled rounded button to display question
@@ -30,6 +36,15 @@ WindowManager:
             font_size: 30
             text: root.question
             color: (25/255,44/255,132/255,1)
+            # Template to add images onto buttons: use this to add image for the question
+            Image:
+                id: question
+                source: 'PerimeterProblem.png'
+                y: self.parent.y
+                x: self.parent.x
+                size: self.parent.size
+                allow_stretch: True
+                keep_ratio: True
         
         Label:
             text: "Step 1 of x:"
@@ -47,18 +62,54 @@ WindowManager:
                     root.on_button_click()
                 #   syntax for linking to another screen below
                 #   app.root.current = "screenName"
+                # Template to add images onto buttons: use this to add image for the answer choices
+                Image:
+                    id: answerChoice1
+                    source: 'PerimeterProblem.png'
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: True
             RoundedButton:
                 text: root.strB
                 on_release:
                     root.clicked()
+                # Template to add images onto buttons: use this to add image for the answer choices
+                Image:
+                    id: answerChoice2
+                    source: 'PerimeterProblem.png'
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: True
 
         BoxLayout:
             spacing: "10dp"
 
             RoundedButton:
                 text: root.strC
+                # Template to add images onto buttons: use this to add image for the answer choices
+                Image:
+                    id: answerChoice3
+                    source: 'PerimeterProblem.png'
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: True
             RoundedButton:
                 text: root.strD
+                # Template to add images onto buttons: use this to add image for the answer choices
+                Image:
+                    id: answerChoice4
+                    source: 'PerimeterProblem.png'
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: True
 
 # similar styling to rounded buttons in choose your level screen
 <RoundedButton@Button>
@@ -93,3 +144,8 @@ WindowManager:
             radius: [20]
     # wraps the text in the button so longer texts can be displayed
     text_size: self.width, None
+
+# for back button to go back to previous screen 
+<RootWidget>:
+    Elementary
+    Middle
