@@ -66,6 +66,18 @@ class Fraction:
 		
 # TEST
 if __name__ == "__main__":
+	while True:
+		inp = int(input('enter numerator > '))
+		if inp == 'quit' or inp == 'exit':
+			exit()
+		den = int(input('enter denominator > '))
+		if den == 'quit' or den == 'exit':
+			exit()
+		if den == 0:
+			print("Can't have denominator as 0, division by 0 is not allowed.")
+			continue
+		print(Fraction(inp/den))
+	# below are test cases that worked, just delete the loop above to access
 	print(Fraction(81, 9)) # expecting 9
 	print(Fraction(7, 3)) # expecting 7/3
 	print(Fraction(2, 4) * Fraction(4, 2)) # expecting 1
