@@ -1,6 +1,8 @@
 from .nodes import *
 from .nodes import NumberNode as Number
 
+from timeit import default_timer as timer
+
 class Interpreter:
 	def __init__(self, optionalNode = None):
 		if optionalNode:
@@ -26,11 +28,21 @@ class Interpreter:
 	def visit_DivideNode(self, node):
 		try:
 			return Number(self.visit(node.node_a).value / self.visit(node.node_b).value)
-		except:
-			raise Exception("Runtime math error")
+		except Exception as msg:
+			raise Exception("Runtime math error: " + msg)
 	
 	def visit_PlusNode(self, node):
-		Interpreter.visit_NumberNode(self, node.node)
-	
-	def visit_MinusNode(self, node):
-		return Number(-node.node)
+		return Interpreter.visit_NumberNode(self, node.node)
+
+	def visit_MinusNode(self, node): # double recursion forward technique
+		current = node
+		while True: # check next node to negate, if unavailable, check next node to be positive, if unavailable, repeat cycle
+			current = current.node
+			if isinstance(current, NumberNode):
+				return Number(-current.value)
+			else:
+				current = current.node
+				if isinstance(current, NumberNode):
+					return Number(current.value)
+		# note: recursion was tested to be up to 3x slower than this implementation
+		# negative counter was up to 1.5x slower + boolean variable switching was 10% slower (approx.)
