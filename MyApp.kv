@@ -1,0 +1,74 @@
+#:kivy 2.1.0
+GridLayoutEx:
+
+<GridLayoutEx>:
+    padding: ("20dp", "20dp", "20dp", "20dp")
+    rows: 2
+    spacing: "10dp"
+    Button:
+        id: equation
+        text: "Question"
+        size_hint: 1, .6
+        background_color: 0, 1, 1, 1
+    BoxLayout:
+        orientation: "horizontal"
+        spacing: "10dp"
+        Button:
+            text: root.strA
+            background_color: (0, 0, 1, 1)
+            on_press: root.on_button_click()
+        Button:
+            text: root.strB
+            background_color: (0, 0, 1, 1)
+            on_press: root.clicked()
+        Button:
+            text: "C"
+            background_color: (0, 0, 1, 1)
+        Button:
+            text: "D"
+            background_color: (0, 0, 1, 1)
+
+<WidgetsEx>:
+    cols: 3
+    Button:
+        text: "Click here"
+        on_press: root.on_button_click()
+    Label:
+        text: root.my_text
+
+<BoxLayoutEx>:
+    Button:
+        text: "Questions"
+        size_hint: .5, None
+        height: "100dp"
+        pos_hint: {"center_y": .5}
+        pos: "100dp", "200dp"
+    
+    BoxLayout:
+        orientation: "horizontal"
+        spacing: "10dp"
+        Button:
+            text: "A"
+            size_hint: 1, 0.5
+        Button:
+            text: "B"
+            size_hint: 1, 0.5
+        Button:
+            text: "C"
+            size_hint: 1, 0.5
+        Button:
+            text: "D"
+            size_hint: 1, 0.5
+
+#<MainWidget>:
+#    Button:
+#        text: "Hello"
+#        size: "100dp", "100dp"
+#        pos: "100dp", "200dp"
+#        color: 0, 0, 1, 1
+#    Button:
+#        text: "Hello"
+#        size: "200dp", "200dp"
+#        pos: "200dp", "100dp"
+#        color: 0, 0, 1, 1
+        
