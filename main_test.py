@@ -9,6 +9,7 @@ import tkinter as tk
 #
 
 if __name__ == "__main__":
+    get_tokens = False
     tkinter_flag = False
     while True:
         test_input = input("enter > ").lower()
@@ -16,6 +17,9 @@ if __name__ == "__main__":
             exit()
         lexer = Lexer(test_input)
         tokens = lexer.generate_tokens()
+        if get_tokens:
+            for token in tokens:
+                print(token)
         parser = Parser(tokens)
         tree = parser.parse()
         if not tree: 
