@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+# include directive includes the contents of another .kv file
+#: include ProblemCards.kv
+
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e
 # write screens here 
 WindowManager:
     LevelWindow:
@@ -5,6 +11,10 @@ WindowManager:
     MiddleSchool:
     HighSchool:
     College:
+<<<<<<< HEAD
+=======
+    ProblemCards:
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e
 
 <LevelWindow>:
     # making the choose your level screen 
@@ -35,9 +45,12 @@ WindowManager:
                 font_size: 20
                 halign: 'center'
                 valign: 'center'
+<<<<<<< HEAD
                 #background color not needed because the color is declared in <RoundedButtons>
                 #background_color: (25/255,44/255,132/255,1)
                 #background_normal: ''
+=======
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e
                 # click on button and it will change to a new screen
                 on_release:
                     app.root.current = "elementary"
@@ -127,12 +140,22 @@ WindowManager:
             font_size: 20
             #connect this button to card layout 
             on_release:
+<<<<<<< HEAD
+=======
+                app.root.current = "ProblemCards"
+                root.manager.transition.direction = "left"
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e
 
         RoundedButtonForTopic:
             text: "Rounding Whole Numbers"
             font_size: 20
             #connect this button to card layout 
             on_release:
+<<<<<<< HEAD
+=======
+                app.root.current = "ProblemCards"
+                root.manager.transition.direction = "left"
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e
 
 <MiddleSchool>:
     # screen for middle school math 
@@ -158,12 +181,22 @@ WindowManager:
             font_size: 20
             #connect this button to card layout 
             on_release:
+<<<<<<< HEAD
+=======
+                app.root.current = "ProblemCards"
+                root.manager.transition.direction = "left"
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e
 
         RoundedButtonForTopic:
             text: "Solving Equations With\nOne Unknown"
             font_size: 20
             #connect this button to card layout 
             on_release:
+<<<<<<< HEAD
+=======
+                app.root.current = "ProblemCards"
+                root.manager.transition.direction = "left"
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e
 
 <HighSchool>:
     # screen for high school math 
@@ -189,12 +222,22 @@ WindowManager:
             font_size: 20
             #connect this button to card layout 
             on_release:
+<<<<<<< HEAD
+=======
+                app.root.current = "ProblemCards"
+                root.manager.transition.direction = "left"
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e
 
         RoundedButtonForTopic:
             text: "Logarithms"
             font_size: 20
             #connect this button to card layout 
             on_release:
+<<<<<<< HEAD
+=======
+                app.root.current = "ProblemCards"
+                root.manager.transition.direction = "left"
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e
 
 <College>:
     # screen for college math 
@@ -220,9 +263,20 @@ WindowManager:
             font_size: 20
             #connect this button to card layout 
             on_release:
+<<<<<<< HEAD
+=======
+                app.root.current = "ProblemCards"
+                root.manager.transition.direction = "left"
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e
 
         RoundedButtonForTopic:
             text: "Integrals"
             font_size: 20
             #connect this button to card layout 
+<<<<<<< HEAD
             on_release:
+=======
+            on_release:
+                app.root.current = "ProblemCards"
+                root.manager.transition.direction = "left"
+>>>>>>> 8da0a82e3fb59051023a199e0b68edfd9e0bc66e

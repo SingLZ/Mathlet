@@ -1,0 +1,151 @@
+# NOTE THIS IS THE 2x2 Problem Layout
+
+# for back button on ProblemCards.kv to return to previous screen
+<Screen>:
+    on_leave: app.previous_screen = self.name
+
+WindowManager:
+    ProblemCards:
+
+<ProblemCards>:
+    name: "ProblemCards"
+
+    padding: ("20dp", "20dp", "20dp", "20dp")
+    spacing: "10dp"
+
+    BoxLayout:
+        orientation: "vertical"
+        padding: "30dp"
+        spacing: "10dp"
+        size: root.width, root.height
+        
+        # added a back button go back to home screen (note: topic screen would be more reasonable)
+        Button:
+            text: "Go Back"
+            pos_hint: {'left': 1, 'top': 1}
+            size_hint: (0.22,0.22)
+            font_size: 14
+            on_release: 
+                # rooting this to the elementary topics screen for now since we are only working on completing Elementary for our MVP
+                app.root.current = app.previous_screen
+                root.manager.transition.direction = "right"
+
+        # using disabled rounded button to display question
+        RoundedButtonQuestion:
+            disabled: True
+            font_size: 30
+            text: root.question
+            color: (25/255,44/255,132/255,1)
+            # Template to add images onto buttons: use this to add image for the question
+            Image:
+                id: question
+                source: 'PerimeterProblem.png'
+                y: self.parent.y
+                x: self.parent.x
+                size: self.parent.size
+                allow_stretch: True
+                keep_ratio: True
+        
+        Label:
+            text: "Step 1 of x:"
+            halign: 'center'
+            valign: 'center'
+            color: (0,0,0,1)
+            size_hint: (1,0.2)
+
+        BoxLayout:
+            spacing: "10dp"
+
+            RoundedButton:
+                text: root.strA
+                on_release:
+                    root.on_button_click()
+                #   syntax for linking to another screen below
+                #   app.root.current = "screenName"
+                # Template to add images onto buttons: use this to add image for the answer choices
+                Image:
+                    id: answerChoice1
+                    source: 'PerimeterProblem.png'
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: True
+            RoundedButton:
+                text: root.strB
+                on_release:
+                    root.clicked()
+                # Template to add images onto buttons: use this to add image for the answer choices
+                Image:
+                    id: answerChoice2
+                    source: 'PerimeterProblem.png'
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: True
+
+        BoxLayout:
+            spacing: "10dp"
+
+            RoundedButton:
+                text: root.strC
+                # Template to add images onto buttons: use this to add image for the answer choices
+                Image:
+                    id: answerChoice3
+                    source: 'PerimeterProblem.png'
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: True
+            RoundedButton:
+                text: root.strD
+                # Template to add images onto buttons: use this to add image for the answer choices
+                Image:
+                    id: answerChoice4
+                    source: 'PerimeterProblem.png'
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    allow_stretch: True
+                    keep_ratio: True
+
+# similar styling to rounded buttons in choose your level screen
+<RoundedButton@Button>
+    background_color:(0,0,0,0)
+    background_normal: ''
+    halign: 'center'
+    valign: 'center'
+    # canvas is a container for instructions. Use canvas.before to add instructions rendered before with self. 
+    canvas.before:
+        Color:
+            rgba: (25/255,44/255,132/255,1)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            # change radius to change roundness of the button
+            radius: [28]
+    # wraps the text in the button so longer texts can be displayed
+    text_size: self.width, None
+
+# display for question
+<RoundedButtonQuestion@Button>
+    background_color:(0,0,0,0)
+    background_normal: ''
+    halign: 'center'
+    valign: 'center'
+    canvas.before:
+        Color:
+            rgba: (76/255,92/255,165/255,0.8)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: [20]
+    # wraps the text in the button so longer texts can be displayed
+    text_size: self.width, None
+
+# for back button to go back to previous screen 
+<RootWidget>:
+    Elementary
+    Middle
