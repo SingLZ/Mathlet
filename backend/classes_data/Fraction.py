@@ -76,7 +76,7 @@ if __name__ == "__main__":
 		if den == 0:
 			print("Can't have denominator as 0, division by 0 is not allowed.")
 			continue
-		print(Fraction(inp/den))
+		print(Fraction(inp, den))
 	# below are test cases that worked, just delete the loop above to access
 	print(Fraction(81, 9)) # expecting 9
 	print(Fraction(7, 3)) # expecting 7/3
