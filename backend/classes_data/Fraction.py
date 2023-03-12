@@ -29,6 +29,12 @@ class Fraction:
 		else:
 			return self.gcd(b, a % b)
 	
+	def latexify(self): # convert to latex readable form
+		if self.__den == 1:
+			return f'${self.__num}$'
+		else:
+			return r'\frac{' + str(self.__num) + '}{' + str(self.__den) + '}'
+	
 	def __eq__(self,other):
 		return self.getNum() == other.getNum() and self.getDen() == other.getDen()
 
@@ -76,7 +82,9 @@ if __name__ == "__main__":
 		if den == 0:
 			print("Can't have denominator as 0, division by 0 is not allowed.")
 			continue
-		print(Fraction(inp, den))
+		result = Fraction(inp, den)
+		approximated = str(result.approximate()).rstrip('0').rstrip('.')
+		print(result, f'approximated: {approximated}', f'latex: {result.latexify()}')
 	# below are test cases that worked, just delete the loop above to access
 	print(Fraction(81, 9)) # expecting 9
 	print(Fraction(7, 3)) # expecting 7/3
