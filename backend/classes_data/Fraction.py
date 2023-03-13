@@ -33,7 +33,7 @@ class Fraction:
 		if self.__den == 1:
 			return f'${self.__num}$'
 		else:
-			return r'\frac{' + str(self.__num) + '}{' + str(self.__den) + '}'
+			return r'$\frac{' + str(self.__num) + r'}{' + str(self.__den) + r'}$'
 	
 	def __eq__(self,other):
 		return self.getNum() == other.getNum() and self.getDen() == other.getDen()
