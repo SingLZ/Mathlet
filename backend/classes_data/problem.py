@@ -1,53 +1,35 @@
-from abc import ABC, abstractmethod
-#from GradeLevel import GradeLevel, PreSchool
 from dataclasses import dataclass
 
 @dataclass
-class Problem(ABC):
+class Problem():
     Equation: str
     Steps: list | set
-    GradeLevel: any
-    Answer: float | str # includes inf/-inf
-    CurrentStep = 0 # index in Steps
+    CurrentStep = 0 # index for Steps
 
     def getCurrentStep(self):
         return self.Steps[self.CurrentStep]
 
-    def advanceAndGet(self):
+    def getNextStep(self):
         CurrentStepData = self.getCurrentStep()
         self.CurrentStep += 1
         return CurrentStepData
     
-    def isLastStep(self):
+    def isAnswer(self):
         return self.CurrentStep == len(self.Steps)-1
+
+    def getAnswer(self):
+        return self.Steps[-1]
     
+    def reset(self):
+        self.CurrentStep = 0
+
+    def __iter__(self):
+        self.CurrentStep -= 1
+        while self.CurrentStep < len(self.Steps):
+            yield self.getNextStep()
+
     def __repr__(self):
         string = self.Equation
         for step in self.Steps:
             string += "\n" + step
-        string += "\n" + self.Answer
         return string
-
-import random
-def randomize(): # testing
-    firstTerm = str(random.randint(1, 10)) # coefficient
-    secondTerm = str(random.randint(1, 10)) # constant
-    result = (6 - float(secondTerm)) / float(firstTerm)
-    randomizedProblem = Problem(firstTerm + "x + " + secondTerm + " = 6", ['- ' + secondTerm, '/ ' + firstTerm], 'PreSchool', 'x = ' + str(result))
-    return randomizedProblem
-
-def manufactureArithmeticProblem():
-    problem = Problem("2x + 3 = 7", [("-3", "2x + 3 - 3 = 7 - 3", "2x = 7 - 3", "2x = 4"), ("/2", "x = 4/2")], 'PreSchool', "x = 2")
-    return problem
-
-# sample problem
-if __name__ == "__main__":
-    problem = manufactureArithmeticProblem()
-    while not problem.isDone():
-        print(problem.Equation)
-        if input("type anything to go to next step > ").lower() == "quit":
-            exit()
-        step = problem.advanceAndGet()
-        for i in range(1, len(step)):
-            print(step[i])
-    print(f"The solution is: {problem.Answer}")
