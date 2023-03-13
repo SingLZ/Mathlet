@@ -27,6 +27,7 @@ WindowManager:
             valign: 'center'
             color: (0,0,0,1)
             size_hint: (1,0.2)
+            id: label
 
         BoxLayout:
             spacing: "10dp"
@@ -35,14 +36,17 @@ WindowManager:
                 id: A
                 text: root.strA.strProp
                 on_release:
-                    root.changeSteps()
+                    root.animateCardA(self)
+                    root.changeStepsA()
                 #   syntax for linking to another screen below
                 #   app.root.current = "screenName"
             RoundedButton:
                 id: B
                 text: root.strB.strProp
                 on_release:
-                    root.changeSteps()
+                    root.animateCard(self)
+                    root.changeStepsB()
+        
 
         BoxLayout:
             spacing: "10dp"
@@ -51,12 +55,14 @@ WindowManager:
                 id: C
                 text: root.strC.strProp
                 on_release:
-                    root.changeSteps()
+                    root.animateCard(self)
+                    root.changeStepsC()
             RoundedButton:
                 id: D
                 text: root.strD.strProp
                 on_release:
-                    root.changeSteps()
+                    root.animateCard(self)
+                    root.changeStepsD()
 
 # similar styling to rounded buttons in choose your level screen
 <RoundedButton@Button>
