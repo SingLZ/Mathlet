@@ -1,10 +1,12 @@
 class Fraction:
-	def __init__(self, a, b=1):
+	def __init__(self, a: int, b: int = 1, simplifyFlag: bool = False):
 		self.__num = a
 		if b == 0:
 			raise ZeroDivisionError
 		self.__den = b
-		self.simplify()
+
+		if simplifyFlag:
+			self.simplify()
 		
 	def getNum(self):
 		return self.__num
@@ -63,12 +65,20 @@ class Fraction:
 			return Fraction(self.getDen(), self.getNum())**exp
 		else:
 			return self * self**(exp-1)
+
+	def __mod__(self, num_or_fraction): # approximation modulo
+		if isinstance(num_or_fraction, int) or isinstance(num_or_fraction, float):
+			return self.approximate() % num_or_fraction
+		elif isinstance(num_or_fraction, Fraction):
+			return self.approximate() % num_or_fraction.approximate()
+		raise ValueError(f'Attempted to modulo a Fraction with an incompatible type: {type(num_or_fraction)}')
 		
 	def __repr__(self):
-		if self.__den == 1 :
-			return str(self.__num)
-		else:
-			return str(self.__num) + "/" + str(self.__den)
+		return self.latexify()
+		#if self.__den == 1 :
+			#return str(self.__num)
+		#else:
+			#return str(self.__num) + "/" + str(self.__den)
 		
 # TEST
 if __name__ == "__main__":
