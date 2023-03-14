@@ -1,60 +1,58 @@
 from dataclasses import dataclass
 
 @dataclass
+class Step():
+    result: str
+    step: str
+    wrong_steps: set # (str, str, str)
+    feedback: str = ''
+
+    def __repr__(self) -> str:
+        return self.result
+
+@dataclass
 class Problem():
+    Equation: str
     Steps: list | set
-    StepsData: list
-    FalseSteps: list
-    # FalseSteps needs to look like this:
-    # [(wrongStep1, wrongStep2, wrongStep3), (...), ...]
 
     CurrentStep = 0 # index for Steps
 
-    def getCurrentStep(self):
+    def getCurrentStep(self) -> Step:
         return self.Steps[self.CurrentStep]
+    
+    def getCurrentWrongSteps(self) -> set:
+        return self.getCurrentStep().wrong_steps
+    
+    def isAtAnswer(self):
+        return self.CurrentStep == len(self.Steps)-1
+
+    def strToCurrentStep(self):
+        eq = self.getEquation()
+        for step in range(0, self.CurrentStep + 1):
+            eq += f'\n{self.Steps[step].result}'
+        return eq
+
+    def getEquation(self):
+        return self.Equation
+    
+    def getAnswer(self):
+        return self.Steps[len(self.Steps)-1].step
 
     def next(self):
         self.CurrentStep += 1
         return self.getCurrentStep()
-    
-    def getEquation(self):
-        return self.Steps[0]
 
-    def isAtAnswer(self):
-        return self.CurrentStep == len(self.Steps)-1
-
-    def isAtEquation(self):
-        return self.CurrentStep == 0
-
-    def getAnswer(self):
-        return self.Steps[-1]
-    
-    def getCurrentFalseSteps(self):
-        if not(self.isAtEquation() or self.isAtAnswer()): # if not equation nor answer
-            return self.FalseSteps[self.CurrentStep]
-        return None
-
-    def getCurrentStepData(self):
-        if not(self.isAtEquation() or self.isAtAnswer()): # if not equation nor answer
-            return self.StepsData[self.CurrentStep]
-        return None
-    
     def reset(self):
         self.CurrentStep = 0
-
-    def strToCurrentStep(self):
-        string = self.getEquation()
-        for step_index in range(1, self.CurrentStep+1):
-            string += f'\n{self.Steps[step_index]}'
-        return string
+        return self.Equation
 
     def __iter__(self):
         self.CurrentStep -= 1
-        while self.CurrentStep < len(self.Steps):
+        while self.CurrentStep < len(self.Steps)-1:
             yield self.next()
 
-    def __repr__(self):
-        string = ''
-        for step in self.Steps:
-            string += "\n" + step
-        return string
+    def __repr__(self) -> str:
+        str = self.getEquation()
+        for step in self:
+            str += f'\n{step.result}'
+        return str
