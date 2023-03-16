@@ -1,3 +1,4 @@
+#:kivy 2.1.0
 # NOTE THIS IS THE 2x2 Problem Layout
 
 # for back button on ProblemCards.kv to return to previous screen
@@ -29,6 +30,9 @@ WindowManager:
                 # rooting this to the elementary topics screen for now since we are only working on completing Elementary for our MVP
                 app.root.current = app.previous_screen
                 root.manager.transition.direction = "right"
+                # reload the current screen to refresh it
+                root.manager.get_screen('ProblemCards').reload()
+
 
         # using disabled rounded button to display question
         RoundedButtonQuestion:
@@ -39,7 +43,7 @@ WindowManager:
             # Template to add images onto buttons: use this to add image for the question
             Image:
                 id: question
-                source: 'PerimeterProblem.png'
+                source: 'output.png'
                 y: self.parent.y
                 x: self.parent.x
                 size: self.parent.size
@@ -57,15 +61,16 @@ WindowManager:
             spacing: "10dp"
 
             RoundedButton:
+                id: my_button
                 text: root.strA
                 on_release:
-                    root.on_button_click()
+                    root.on_clickedButtonA()
                 #   syntax for linking to another screen below
                 #   app.root.current = "screenName"
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice1
-                    source: 'PerimeterProblem.png'
+                    source: 'choice1.png'
                     y: self.parent.y
                     x: self.parent.x
                     size: self.parent.size
@@ -74,11 +79,11 @@ WindowManager:
             RoundedButton:
                 text: root.strB
                 on_release:
-                    root.clicked()
+                    root.on_clickedButtonB()
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice2
-                    source: 'PerimeterProblem.png'
+                    source: 'choice2.png'
                     y: self.parent.y
                     x: self.parent.x
                     size: self.parent.size
@@ -90,10 +95,12 @@ WindowManager:
 
             RoundedButton:
                 text: root.strC
+                on_release:
+                    root.on_clickedButtonC()
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice3
-                    source: 'PerimeterProblem.png'
+                    source: 'choice3.png'
                     y: self.parent.y
                     x: self.parent.x
                     size: self.parent.size
@@ -101,10 +108,12 @@ WindowManager:
                     keep_ratio: True
             RoundedButton:
                 text: root.strD
+                on_release:
+                    root.on_clickedButtonD()
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice4
-                    source: 'PerimeterProblem.png'
+                    source: 'choice4.png'
                     y: self.parent.y
                     x: self.parent.x
                     size: self.parent.size
