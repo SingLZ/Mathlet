@@ -15,6 +15,7 @@ from backend.classes_data.FractionProblems import problems
 problem = problems[0]
 
 def loadProblem(self):
+	self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
 	self.ids.question.source = make_img(problem.getEquation(), 'output')
 	self.ids.question.reload()
 	self.ids.answerChoice1.source = make_img(problem.getCurrentStep().step, 'choice1')
@@ -63,6 +64,7 @@ class ProblemCards(Screen):
 			self.ids.answerChoice1.reload()
 			self.feedbackMode = False
 			return
+		self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
 		self.ids.question.source = make_img(f'{problem.strToCurrentStep()}', 'output')
 		self.ids.question.reload()
 		self.ids.answerChoice1.source = make_img(problem.getCurrentStep().feedback, 'choice1')
@@ -79,6 +81,7 @@ class ProblemCards(Screen):
 	def on_clickedButtonD(self):
 		self.strD = "Wrong"
 	def reload(self):
+		self.question = ''
 		self.strA = ''
 		self.strB = ''
 		self.strC = ''
