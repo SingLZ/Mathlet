@@ -6,7 +6,6 @@ from intrepreter.intrepreter import Interpreter
 #import classes_data.GradeLevel
 
 import tkinter as tk
-#
 
 if __name__ == "__main__":
     get_tokens = False
@@ -26,7 +25,7 @@ if __name__ == "__main__":
             continue
         interpreter = Interpreter()
         value = interpreter.visit(tree)
-        text = f"tree: {tree}; computed result: {value}"
+        text = f"tree: {tree}\n computed result: {value}"
         if tkinter_flag:
             root = tk.Tk()
             label = tk.Label(root, text=text, font=("Arial", 72))
