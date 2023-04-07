@@ -27,7 +27,7 @@ class Interpreter:
 		return Number(self.visit(node.node_a).value / self.visit(node.node_b).value)
 	
 	def visit_PlusNode(self, node):
-		Interpreter.visit_NumberNode(self, node.node)
+		return Interpreter.visit_NumberNode(self, node.node)
 	
 	def visit_MinusNode(self, node): # double recursion forward technique
 		current = node
