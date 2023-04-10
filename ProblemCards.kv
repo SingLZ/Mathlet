@@ -38,7 +38,7 @@ WindowManager:
         RoundedButtonQuestion:
             disabled: True
             font_size: 30
-            text: root.question
+            text: ''
             color: (25/255,44/255,132/255,1)
             # Template to add images onto buttons: use this to add image for the question
             Image:
@@ -63,9 +63,9 @@ WindowManager:
 
             RoundedButton:
                 id: my_button
-                text: root.strA
+                #text: root.strA
                 on_release:
-                    root.on_clickedButtonA()
+                    root.on_clickedButtonA(self)
                 #   syntax for linking to another screen below
                 #   app.root.current = "screenName"
                 # Template to add images onto buttons: use this to add image for the answer choices
@@ -78,9 +78,9 @@ WindowManager:
                     allow_stretch: True
                     keep_ratio: True
             RoundedButton:
-                text: root.strB
+                #text: root.strB
                 on_release:
-                    root.on_clickedButtonB()
+                    root.on_clickedButtonB(self)
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice2
@@ -95,9 +95,9 @@ WindowManager:
             spacing: "10dp"
 
             RoundedButton:
-                text: root.strC
+                #text: root.strC
                 on_release:
-                    root.on_clickedButtonC()
+                    root.on_clickedButtonC(self)
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice3
@@ -108,9 +108,9 @@ WindowManager:
                     allow_stretch: True
                     keep_ratio: True
             RoundedButton:
-                text: root.strD
+                #text: root.strD
                 on_release:
-                    root.on_clickedButtonD()
+                    root.on_clickedButtonD(self)
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice4
