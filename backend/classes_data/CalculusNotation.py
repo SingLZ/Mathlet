@@ -73,4 +73,5 @@ if __name__ == '__main__':
     sys.path.append(r'C:\Users\steve\Documents\CS\ci102_repositories\my_branch')
     from mathimg import make_img
     
+    # change here to do your test and look at output.png (run this file)
     make_img( Limit('x^2 + 4', 'x', 'inf').latexify(), 'output', 'png' )
