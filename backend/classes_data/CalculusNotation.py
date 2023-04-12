@@ -24,7 +24,7 @@ class Integral():
     variable: str # for dx/dy/du, etc
 
     def latexify(self):
-        return r'$\[ \int_{' + self.lower + r'}^{' + self.upper + r'}' + self.function + r'\,' + ('d'+self.variable) + r' \]$'
+        return r'$\int_{' + self.lower + r'}^{' + self.upper + r'}' + self.function + r'\,' + ('d'+self.variable) + r'$'
     
     def __str__(self) -> str:
         return self.latexify()
@@ -33,12 +33,12 @@ class Integral():
 class E_Sum():
     function: str = ''
     index_variable: str = 'n'
-    index_start: str = '1'
-    index_limit: str = '\infty' # can use 'inf'
+    index_start: int | str = '1'
+    index_limit: int | str = '\infty' # can use 'inf'
 
     def latexify(self):
-        latex_limit = self.index_limit == 'inf' and '\infty' or self.index_limit
-        return r'$\[ \sum_{' + self.index_variable + '=' + self.index_start + r' }^{' + latex_limit + r'} ' + self.function + r'\]$'
+        latex_limit = self.index_limit == 'inf' and '\infty' or self.index_limit == '-inf' and '-\infty' or str(self.index_limit)
+        return r'$\sum_{' + self.index_variable + '=' + str(self.index_start) + r' }^{' + latex_limit + r'} ' + self.function + r'$'
 
     def __str__(self) -> str:
         return self.latexify()
@@ -62,7 +62,7 @@ class Derivative():
             return r'$\frac{' + r'\partial^{' + str(self.order) + '}'+self.function + '}{' + r'\partial'+self.variable_respect_to+r'^{' + str(self.order) + '}' +'}$'
 
     def latexify_function(self):
-        return r'$\[ ' + self.function + r"' (" + self.variable_respect_to + r')]$'
+        return r'$' + self.function + r"'(" + self.variable_respect_to + r')$'
     
     def __str__(self) -> str:
         return self.latexify_quotient()
