@@ -24,7 +24,7 @@ class Integral():
     variable: str # for dx/dy/du, etc
 
     def latexify(self):
-        return r'$\[ \int_{' + self.lower + r'}^{' + self.upper + r'}' + function + r'\,' + ('d'+self.variable) + r' \]$'
+        return r'$\[ \int_{' + self.lower + r'}^{' + self.upper + r'}' + self.function + r'\,' + ('d'+self.variable) + r' \]$'
     
     def __str__(self) -> str:
         return self.latexify()
