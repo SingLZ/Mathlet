@@ -4,7 +4,7 @@ from dataclasses import dataclass
 class Step():
     result: str
     step: str
-    wrong_steps: set # (str, str, str)
+    wrong_steps: set = None # (Step, Step, Step)
     feedback: str = ''
 
     def __repr__(self) -> str:
@@ -56,3 +56,13 @@ class Problem():
         for step in self:
             str += f'\n{step.result}'
         return str
+    
+# example implementation
+'''
+Problem(Equation='f(x)',
+        Steps=Step(result='result', step='add 2 to both sides', feedback='GOOD JOB', 
+            wrong_steps = (Step(result='1/0', step='+ 1 billion', feedback='you suck'), Step(...), Step(...))
+            )
+)
+you don't need the Equation= or Steps=, you can just write it in order
+'''
