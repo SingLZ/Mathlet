@@ -133,7 +133,7 @@ class ProblemCards(Screen):
 		wrong_steps = problem.getCurrentWrongSteps()
 		
 		if not self.feedbackMode:
-			self.ids.answerChoice3.source = make_img(wrong_steps[1].feedback, 'choice2')
+			self.ids.answerChoice3.source = make_img(wrong_steps[1].feedback, 'choice3')
 			self.ids.answerChoice3.reload() # image refresh
 			animateWrong.start(widget)
 
@@ -149,7 +149,7 @@ class ProblemCards(Screen):
 		wrong_steps = problem.getCurrentWrongSteps()
 		
 		if not self.feedbackMode:
-			self.ids.answerChoice4.source = make_img(wrong_steps[2].feedback, 'choice2')
+			self.ids.answerChoice4.source = make_img(wrong_steps[2].feedback, 'choice4')
 			self.ids.answerChoice4.reload() # image refresh
 			animateWrong.start(widget)
 
