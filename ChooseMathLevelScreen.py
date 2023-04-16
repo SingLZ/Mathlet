@@ -12,8 +12,9 @@ from kivy.animation import Animation
 
 ###
 from mathimg import make_img
-from backend.classes_data.FractionProblems import problems
-problem = problems[0]
+from backend.classes_data.OrderOfOperationsProblem import problems
+
+problem = problems[2] # Test from 0-2
 
 def loadProblem(self):
 	self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
@@ -45,8 +46,8 @@ class ProblemCards(Screen):
 
 	feedbackMode = False # added
 	
-	# Animates Card A based on the correctness of Card A
-	def animateCardA(self, widget, *args):
+	# Animates Card based on the correctness of Card
+	def animateCard(self, widget, *args):
         # Animation when the step is incorrect
 		animateWrong = Animation(
             background_color=(100/255, 42/255, 42/255, 1),
@@ -65,28 +66,7 @@ class ProblemCards(Screen):
             background_color=(25/255, 44/255, 132/255, 1)
         )
 
-		animateCorrect.start(widget)
-
-	def animateCard(self, widget, *args):
-        # Animation when the step is incorrect
-		animateWrong = Animation(
-            background_color=(100/255, 42/255, 42/255, 1),
-            duration=2
-        )
-		animateWrong += Animation(
-            background_color=(25/255, 44/255, 132/255, 1)
-        )
-
-        # Animation when the step is correct
-		animateCorrect = Animation(
-            background_color=(183/255, 140/255, 56/255, 1),
-            duration=2
-        )
-		animateCorrect += Animation(
-            background_color=(25/255, 44/255, 132/255, 1)
-        )
-
-		animateWrong.start(widget)
+		#animateCorrect.start(widget) or animateWrong.start(widget)
 
 	def __init__(self, **kw):
 		super().__init__(**kw)
@@ -126,10 +106,6 @@ class ProblemCards(Screen):
 		animateCorrect.start(widget)
 
 	def on_clickedButtonB(self, widget, *args):
-		if not self.feedbackMode:
-			self.ids.answerChoice2.source = make_img('', 'choice2')
-			self.ids.answerChoice2.reload() # image refresh
-			self.strB = "Wrong"
 		animateWrong = Animation(
         	background_color=(100/255, 42/255, 42/255, 1),
         	duration=0.5
@@ -137,34 +113,47 @@ class ProblemCards(Screen):
 		animateWrong += Animation(
         	background_color=(25/255, 44/255, 132/255, 1)
     	)
-		animateWrong.start(widget)
-	def on_clickedButtonC(self, widget, *args):
-		self.strC = "Wrong"
-		animateWrong = Animation(
-            background_color=(100/255, 42/255, 42/255, 1),
-        	duration=0.5
-    	)
-		animateWrong += Animation(
-            background_color=(25/255, 44/255, 132/255, 1)
-        )
-		animateWrong.start(widget)
-	def on_clickedButtonD(self, widget, *args):
-		self.strD = "Wrong"
-		animateWrong = Animation(
-            background_color=(100/255, 42/255, 42/255, 1),
-        	duration=0.5
-    	)
-		animateWrong += Animation(
-            background_color=(25/255, 44/255, 132/255, 1)
-        )
-		animateWrong.start(widget)
-	def reload(self):
-		self.question = ''
-		self.strA = ''
-		self.strB = ''
-		self.strC = ''
-		self.strD = ''
 
+		wrong_steps = problem.getCurrentWrongSteps()
+
+		if not self.feedbackMode:
+			self.ids.answerChoice2.source = make_img(wrong_steps[0].feedback, 'choice2')
+			self.ids.answerChoice2.reload() # image refresh
+			animateWrong.start(widget)
+
+	def on_clickedButtonC(self, widget, *args):
+		animateWrong = Animation(
+            background_color=(100/255, 42/255, 42/255, 1),
+        	duration=0.5
+    	)
+		animateWrong += Animation(
+            background_color=(25/255, 44/255, 132/255, 1)
+        )
+
+		wrong_steps = problem.getCurrentWrongSteps()
+		
+		if not self.feedbackMode:
+			self.ids.answerChoice3.source = make_img(wrong_steps[1].feedback, 'choice2')
+			self.ids.answerChoice3.reload() # image refresh
+			animateWrong.start(widget)
+
+	def on_clickedButtonD(self, widget, *args):
+		animateWrong = Animation(
+            background_color=(100/255, 42/255, 42/255, 1),
+        	duration=0.5
+    	)
+		animateWrong += Animation(
+            background_color=(25/255, 44/255, 132/255, 1)
+        )
+
+		wrong_steps = problem.getCurrentWrongSteps()
+		
+		if not self.feedbackMode:
+			self.ids.answerChoice4.source = make_img(wrong_steps[2].feedback, 'choice2')
+			self.ids.answerChoice4.reload() # image refresh
+			animateWrong.start(widget)
+
+	def reload(self):
 		problem.reset()
 		loadProblem(self)
 
