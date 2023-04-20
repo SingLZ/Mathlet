@@ -125,20 +125,61 @@ WindowManager:
                 root.manager.transition.direction = "right"
 
         RoundedButtonForTopic:
-            text: "Perimeter and Shape"
+            id: elementaryTopics1
+            text: "Order of Operations \n PEMDAS"
             font_size: 20
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
                 root.manager.transition.direction = "left"
-
+            # updates Progress Bar when button is pressed 
+            on_press:
+                app.root.get_screen("elementary").update_progressBar("pemdasProgressBar", "pemdasLabel")
+        
+        ProgressBar:
+            id: pemdasProgressBar
+            min: 0
+            max: 1
+            size_hint_x: 0.8
+            size_hint_y: 0.05
+            pos_hint: {"center_x": 0.5}  # center horizontally
+        
+        Label:
+            id: pemdasLabel
+            text: "0%"
+            size_hint_y: 0.05 
+            color: 0, 0, 0, 1
+            halign: 'right'
+            padding: 35,0
+            text_size: self.width, None
+        
         RoundedButtonForTopic:
+            id: elementaryTopics2
             text: "Rounding Whole Numbers"
             font_size: 20
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
                 root.manager.transition.direction = "left"
+            on_press:
+                app.root.get_screen("elementary").update_progressBar("roundNumProgressBar", "roundNumLabel")
+        
+        ProgressBar:
+            id: roundNumProgressBar
+            min: 0
+            max: 1
+            size_hint_x: 0.8
+            size_hint_y: 0.1 
+            pos_hint: {"center_x": 0.5}  # center horizontally
+        
+        Label:
+            id: roundNumLabel
+            text: "0%"
+            size_hint_y: 0.05 
+            color: 0, 0, 0, 1
+            halign: 'right'
+            padding: 35,0
+            text_size: self.width, None
 
 <MiddleSchool>:
     # screen for middle school math 
@@ -160,6 +201,7 @@ WindowManager:
                 root.manager.transition.direction = "right"
 
         RoundedButtonForTopic:
+            id: middleSchoolTopics1
             text: "Fractions"
             font_size: 20
             #connect this button to card layout 
@@ -167,14 +209,55 @@ WindowManager:
                 app.root.current = "ProblemCards"
                 app.root.current_screen.reload()
                 root.manager.transition.direction = "left"
+            # updates Progress Bar when button is pressed 
+            on_press:
+                app.root.get_screen("middleSchool").update_progressBar("fractionProgressBar", "fractionLabel")
+        
+        ProgressBar:
+            id: fractionProgressBar
+            min: 0
+            max: 1
+            size_hint_x: 0.8
+            size_hint_y: 0.1 
+            pos_hint: {"center_x": 0.5}  # center horizontally
+        
+        Label:
+            id: fractionLabel
+            text: "0%"
+            size_hint_y: 0.05 
+            color: 0, 0, 0, 1
+            halign: 'right'
+            padding: 35,0
+            text_size: self.width, None
 
         RoundedButtonForTopic:
+            id: middleSchoolTopics2
             text: "Solving Equations With\nOne Unknown"
             font_size: 20
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
                 root.manager.transition.direction = "left"
+            # updates Progress Bar when button is pressed 
+            on_press:
+                app.root.get_screen("middleSchool").update_progressBar("oneUnknownProgressBar", "oneUnknownLabel")
+        
+        ProgressBar:
+            id: oneUnknownProgressBar
+            min: 0
+            max: 1
+            size_hint_x: 0.8
+            size_hint_y: 0.1 
+            pos_hint: {"center_x": 0.5}  # center horizontally
+        
+        Label:
+            id: oneUnknownLabel
+            text: "0%"
+            size_hint_y: 0.05 
+            color: 0, 0, 0, 1
+            halign: 'right'
+            padding: 35,0
+            text_size: self.width, None
 
 <HighSchool>:
     # screen for high school math 
@@ -196,20 +279,62 @@ WindowManager:
                 root.manager.transition.direction = "right"
 
         RoundedButtonForTopic:
+            id: highSchoolTopics1
             text: "Quadratic Equations\nwith Complex Solutions"
             font_size: 20
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
                 root.manager.transition.direction = "left"
+            # updates Progress Bar when button is pressed 
+            on_press:
+                app.root.get_screen("highSchool").update_progressBar("quadraticProgressBar", "quadraticLabel")
+        
+        ProgressBar:
+            id: quadraticProgressBar
+            min: 0
+            max: 1
+            size_hint_x: 0.8
+            size_hint_y: 0.1 
+            pos_hint: {"center_x": 0.5}  # center horizontally
+        
+        Label:
+            id: quadraticLabel
+            text: "0%"
+            size_hint_y: 0.05 
+            color: 0, 0, 0, 1
+            halign: 'right'
+            padding: 35,0
+            text_size: self.width, None
 
         RoundedButtonForTopic:
+            id: highSchoolTopics2
             text: "Logarithms"
             font_size: 20
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
                 root.manager.transition.direction = "left"
+            # updates Progress Bar when button is pressed 
+            on_press:
+                app.root.get_screen("highSchool").update_progressBar("logProgressBar", "logLabel")
+        
+        ProgressBar:
+            id: logProgressBar
+            min: 0
+            max: 1
+            size_hint_x: 0.8
+            size_hint_y: 0.1 
+            pos_hint: {"center_x": 0.5}  # center horizontally
+        
+        Label:
+            id: logLabel
+            text: "0%"
+            size_hint_y: 0.05 
+            color: 0, 0, 0, 1
+            halign: 'right'
+            padding: 35,0
+            text_size: self.width, None
 
 <College>:
     # screen for college math 
@@ -231,17 +356,59 @@ WindowManager:
                 root.manager.transition.direction = "right"
 
         RoundedButtonForTopic:
+            id: collegeTopics1
             text: "Derivatives"
             font_size: 20
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
                 root.manager.transition.direction = "left"
+            # updates Progress Bar when button is pressed 
+            on_press:
+                app.root.get_screen("college").update_progressBar("derivativesProgressBar", "derivativesLabel")
+        
+        ProgressBar:
+            id: derivativesProgressBar
+            min: 0
+            max: 1
+            size_hint_x: 0.8
+            size_hint_y: 0.1 
+            pos_hint: {"center_x": 0.5}  # center horizontally
+        
+        Label:
+            id: derivativesLabel
+            text: "0%"
+            size_hint_y: 0.05 
+            color: 0, 0, 0, 1
+            halign: 'right'
+            padding: 35,0
+            text_size: self.width, None
 
         RoundedButtonForTopic:
+            id: highSchoolTopics2
             text: "Integrals"
             font_size: 20
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
                 root.manager.transition.direction = "left"
+            # updates Progress Bar when button is pressed 
+            on_press:
+                app.root.get_screen("college").update_progressBar("integralsProgressBar", "integralsLabel")
+        
+        ProgressBar:
+            id: integralsProgressBar
+            min: 0
+            max: 1
+            size_hint_x: 0.8
+            size_hint_y: 0.1 
+            pos_hint: {"center_x": 0.5}  # center horizontally
+        
+        Label:
+            id: integralsLabel
+            text: "0%"
+            size_hint_y: 0.05 
+            color: 0, 0, 0, 1
+            halign: 'right'
+            padding: 35,0
+            text_size: self.width, None
