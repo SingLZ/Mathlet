@@ -80,7 +80,7 @@ class ProblemCards(Screen):
 		self.strC = "Wrong"
 	def on_clickedButtonD(self):
 		self.strD = "Wrong"
-	def reload(self):
+	def reload(self, class_type: str):
 		self.question = ''
 		self.strA = ''
 		self.strB = ''
