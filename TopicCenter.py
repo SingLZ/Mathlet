@@ -7,13 +7,17 @@ class TopicCenter():
     sets: dict
     current_set: ProblemSet = None
 
-    def getSet(self):
+    def getSets(self) -> dict:
         return self.sets
 
-    def selectSet(self, set_name: str):
+    def selectSet(self, set_name: str) -> ProblemSet:
         self.current_set = self.sets[set_name]
+        return self.current_set
 
-    def calculateCompositeCompletion(self): # average
+    def cycleProblems(self):
+        return self.current_set.cycle()
+
+    def calculateCompositeCompletion(self) -> float: # average
         sum = 0
         total = 0
         for problemSet in self.sets:
@@ -24,7 +28,7 @@ class TopicCenter():
     
 from backend.classes_data.FractionProblems import problems
 main = TopicCenter(
-    {
+    sets={
         'Fractions': ProblemSet(
             problems[0]
         )
@@ -45,3 +49,8 @@ main = TopicCenter(
     }
 )
 '''
+
+if __name__ == "__main__":
+    main.selectSet('Fractions')
+    for i in main.cycleProblems():
+        print(i)
