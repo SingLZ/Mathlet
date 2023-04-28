@@ -25,7 +25,7 @@ if __name__ == "__main__":
             continue
         interpreter = Interpreter()
         value = interpreter.visit(tree)
-        text = f"tree: {tree}\n computed result: {value}"
+        text = f"tree: {tree}\n computed result: {'%.08f' % value.value}"
         if tkinter_flag:
             root = tk.Tk()
             label = tk.Label(root, text=text, font=("Arial", 72))
