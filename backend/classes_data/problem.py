@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 @dataclass
 class Step():
-    result: str = None
     step: str
+    result: str = None
     wrong_steps: set = None # (Step, Step, Step)
     feedback: str = ''
 
