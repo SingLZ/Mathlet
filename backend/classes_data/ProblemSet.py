@@ -1,8 +1,6 @@
 from dataclasses import dataclass
 from .problem import Problem
 
-test = 2
-
 class ProblemSet():
     problems: set
     current: int = 0
