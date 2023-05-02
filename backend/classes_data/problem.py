@@ -7,6 +7,9 @@ class Step():
     wrong_steps: set = None # (Step, Step, Step)
     feedback: str = ''
 
+    def getFeedback(self):
+        return self.feedback
+
     def __repr__(self) -> str:
         return self.result
 
