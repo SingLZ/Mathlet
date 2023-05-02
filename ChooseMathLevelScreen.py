@@ -119,8 +119,9 @@ class ProblemCards(Screen):
 		self.strC = ''
 		self.strD = ''
 
-		if save:
+		if save and main.getCurrentSet():
 			main.save()
+			main.getCurrentProblem().reset()
 			main.current_set = None
 	def reload(self, class_type: str):
 		self.unload()
