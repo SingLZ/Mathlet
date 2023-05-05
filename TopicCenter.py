@@ -72,10 +72,10 @@ main = TopicCenter(
     }
 )
 
-encase arguments in problem sets with sets
+encase arguments in problem sets with tupling (...)
 '''
 
-if __name__ == "__main__":
+if __name__ == "__main__": # test routine
     main.selectSet('Fractions')
     for i in main.cycleProblems():
         print(i)
