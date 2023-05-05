@@ -6,11 +6,11 @@ problems = [
                         step='9 * 2 = 18',
                         feedback='Correct! We use PEMDAS and start with multiplication.',
                         wrong_steps=
-                        (Step(result='2 + 4 = 6',
+                        (Step(step='2 + 4 = 6',
                               feedback='Incorrect. We solve for multiplication before addition.'),
-                         Step(result='4 - 9 = -5',
+                         Step(step='4 - 9 = -5',
                               feedback='Incorrect. We solve for multiplication before subtraction.'),
-                         Step(result='9 - 4 = 5',
+                         Step(step='9 - 4 = 5',
                               feedback='Incorrect. We solve for multiplication before subtraction.')
                         ),
                         ),
@@ -18,11 +18,11 @@ problems = [
                         step='2 + 4 = 6',
                         feedback='Correct! We calculate addition and subtraction from left to right, neither takes priority.',
                         wrong_steps=
-                        (Step(result='2 + 4 = -2',
+                        (Step(step='2 + 4 = -2',
                               feedback='Incorrect'),
-                         Step(result='2 + 18 = 20',
+                         Step(step='2 + 18 = 20',
                               feedback='Incorrect - Check the numbers\' signs'),
-                         Step(result='2 - 4 = -2',
+                         Step(step='2 - 4 = -2',
                               feedback='Incorrect - Check the numbers\' signs')
                         ),
                         ),
@@ -30,11 +30,11 @@ problems = [
                         step='-12',
                         feedback='Correct! We add the two numbers to find the sum. You have completed the problem!', #feedback for the correct answer
                         wrong_steps=
-                        (Step(result='24',
+                        (Step(step='24',
                               feedback='Incorrect - Check the numbers\' signs'),
-                         Step(result='12',
+                         Step(step='12',
                               feedback='Incorrect - Check the numbers\' signs'),
-                         Step(result='2',
+                         Step(step='2',
                               feedback='Incorrect - Check the numbers\' signs')
                         ),
                     )
@@ -45,11 +45,11 @@ problems = [
                         step='2 + 4 = 6',
                         feedback='Correct! We use PEMDAS and start with parentheses',
                         wrong_steps=
-                        (Step(result='5 - 3 = 2',
+                        (Step(step='5 - 3 = 2',
                               feedback='Incorrect. We solve for parentheses before subtraction.'),
-                         Step(result='3 + 2 = 5',
+                         Step(step='3 + 2 = 5',
                               feedback='Incorrect. We solve for parentheses before addition.'),
-                         Step(result='5 + 2 = 7',
+                         Step(step='5 + 2 = 7',
                               feedback='Incorrect. We solve for parentheses before addition.')
                         ),
                         ),
@@ -57,11 +57,11 @@ problems = [
                         step='4 * 5 = 20',
                         feedback='Correct! We move onto multiplication after parentheses',
                         wrong_steps=
-                        (Step(result='5 - 3 = 2',
+                        (Step(step='5 - 3 = 2',
                               feedback='Incorrect. We solve for multiplication before subtraction.'),
-                         Step(result='5 + 6 = 11',
+                         Step(step='5 + 6 = 11',
                               feedback='Incorrect. We solve for multiplication before addition.'),
-                         Step(result='3 - 5 = -2',
+                         Step(step='3 - 5 = -2',
                               feedback='Incorrect. We solve for multiplication before subtraction.')
                         ),
                         ),
@@ -69,11 +69,11 @@ problems = [
                         step='20 - 3 = 17',
                         feedback='Correct! We calculate addition and subtraction from left to right, neither takes priority.',
                         wrong_steps=
-                        (Step(result='20 - 3 = 23',
+                        (Step(step='20 - 3 = 23',
                               feedback='Incorrect - Check the numbers\' signs.'),
-                         Step(result='20 + 3 = 23',
+                         Step(step='20 + 3 = 23',
                               feedback='Incorrect - Check the numbers\' signs.'),
-                         Step(result='20 - 3 = -17',
+                         Step(step='20 - 3 = -17',
                               feedback='Incorrect - Check the numbers\' signs.')
                         ),
                         ),
@@ -81,11 +81,11 @@ problems = [
                         step='23',
                         feedback='Correct! We add the two numbers to find the sum. You have completed the problem!',
                         wrong_steps=
-                        (Step(result='17',
+                        (Step(step='17',
                               feedback='Incorrect - Check the numbers\' signs.'),
-                         Step(result='22',
+                         Step(step='22',
                               feedback='Incorrect - Check the numbers\' signs.'),
-                         Step(result='24',
+                         Step(step='24',
                               feedback='Incorrect - Check the numbers\' signs.')
                         ),
                         ), 
@@ -96,11 +96,11 @@ problems = [
                         step='(5 - 1) = 4',
                         feedback='Correct! We use PEMDAS and start with parentheses',
                         wrong_steps=
-                        (Step(result='2 - 6 = -4',
+                        (Step(step='2 - 6 = -4',
                               feedback='Incorrect. We solve for parentheses before subtraction.'),
-                         Step(result='6 * 5 = 30',
+                         Step(step='6 * 5 = 30',
                               feedback='Incorrect. We solve for parentheses before multiplication.'),
-                         Step(result='1 / 2 = 0.5',
+                         Step(step='1 / 2 = 0.5',
                               feedback='Incorrect. We solve for parentheses before division.')
                         ),
                         ),
@@ -108,11 +108,11 @@ problems = [
                         step='6 * 4 = 24',
                         feedback='Correct! We calculate addition and subtraction from left to right, neither takes priority.',
                         wrong_steps=
-                        (Step(result='2 - 6 = -4',
+                        (Step(step='2 - 6 = -4',
                               feedback='Incorrect. We solve for multiplication before subtraction.'),
-                         Step(result='2 * 4 = 8',
+                         Step(step='2 * 4 = 8',
                               feedback='Incorrect - Check the values that should be multiplied.'),
-                         Step(result='2 / 2 = 1',
+                         Step(step='2 / 2 = 1',
                               feedback='Incorrect - Check the values that we should operate on.')
                         ),
                         ),
@@ -120,11 +120,11 @@ problems = [
                         step='24 / 2 = 12',
                         feedback='Correct! We calculate addition and subtraction from left to right, neither takes priority.',
                         wrong_steps=
-                        (Step(result='2 - 24 = -22',
+                        (Step(step='2 - 24 = -22',
                               feedback='Incorrect - We solve for division before subtraction.'),
-                         Step(result='2 - 24 = 26',
+                         Step(step='2 - 24 = 26',
                               feedback='Incorrect - We solve for division before subtraction.'),
-                         Step(result='2 / 2 = 1',
+                         Step(step='2 / 2 = 1',
                               feedback='Incorrect - Check the values that we should operate on.')
                         ),
                         ),
@@ -132,14 +132,19 @@ problems = [
                         step='-10',
                         feedback='Correct! We subtract the two numbers to find the difference. You have completed the problem!',
                         wrong_steps=
-                        (Step(result='14',
+                        (Step(step='14',
                               feedback='Incorrect - Check the numbers\' signs.'),
-                         Step(result='20',
+                         Step(step='20',
                               feedback='Incorrect - Check the numbers\' signs.'),
-                         Step(result='-14',
+                         Step(step='-14',
                               feedback='Incorrect - Check the numbers\' signs.')
                         ),
                         ), 
                 ]  
             ),
 ]
+
+if __name__ == "__main__":
+    print(problems[0].getTotalNumSteps())
+    print(problems[0].getStepNum())
+    

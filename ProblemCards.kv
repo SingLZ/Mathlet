@@ -31,14 +31,14 @@ WindowManager:
                 app.root.current = app.previous_screen
                 root.manager.transition.direction = "right"
                 # reload the current screen to refresh it
-                root.manager.get_screen('ProblemCards').reload()
+                root.manager.get_screen('ProblemCards').unload(True)
 
 
         # using disabled rounded button to display question
         RoundedButtonQuestion:
             disabled: True
             font_size: 30
-            text: ''
+            text: root.question
             color: (25/255,44/255,132/255,1)
             # Template to add images onto buttons: use this to add image for the question
             Image:
@@ -63,9 +63,9 @@ WindowManager:
 
             RoundedButton:
                 id: my_button
-                #text: root.strA
+                text: root.strA
                 on_release:
-                    root.on_clickedButtonA(self)
+                    root.on_clickedButtonA()
                 #   syntax for linking to another screen below
                 #   app.root.current = "screenName"
                 # Template to add images onto buttons: use this to add image for the answer choices
@@ -78,9 +78,9 @@ WindowManager:
                     allow_stretch: True
                     keep_ratio: True
             RoundedButton:
-                #text: root.strB
+                text: root.strB
                 on_release:
-                    root.on_clickedButtonB(self)
+                    root.on_clickedButtonB()
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice2
@@ -95,9 +95,9 @@ WindowManager:
             spacing: "10dp"
 
             RoundedButton:
-                #text: root.strC
+                text: root.strC
                 on_release:
-                    root.on_clickedButtonC(self)
+                    root.on_clickedButtonC()
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice3
@@ -108,9 +108,9 @@ WindowManager:
                     allow_stretch: True
                     keep_ratio: True
             RoundedButton:
-                #text: root.strD
+                text: root.strD
                 on_release:
-                    root.on_clickedButtonD(self)
+                    root.on_clickedButtonD()
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice4
@@ -154,8 +154,3 @@ WindowManager:
             radius: [20]
     # wraps the text in the button so longer texts can be displayed
     text_size: self.width, None
-
-# for back button to go back to previous screen 
-<RootWidget>:
-    Elementary
-    Middle

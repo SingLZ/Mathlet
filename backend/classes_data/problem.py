@@ -2,10 +2,13 @@ from dataclasses import dataclass
 
 @dataclass
 class Step():
-    result: str
-    step: str = ''
+    step: str
+    result: str = None
     wrong_steps: set = None # (Step, Step, Step)
     feedback: str = ''
+
+    def getFeedback(self):
+        return self.feedback
 
     def __repr__(self) -> str:
         return self.result
@@ -61,7 +64,7 @@ class Problem():
 '''
 Problem(Equation='f(x)',
         Steps=Step(result='result', step='add 2 to both sides', feedback='GOOD JOB', 
-            wrong_steps = (Step(result='1/0', step='+ 1 billion', feedback='you suck'), Step(...), Step(...))
+            wrong_steps = (Step(step='+ 1 billion', feedback='you suck'), Step(...), Step(...))
             )
 )
 you don't need the Equation= or Steps=, you can just write it in order

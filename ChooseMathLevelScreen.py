@@ -8,15 +8,12 @@ from kivy.properties import StringProperty, ObjectProperty
 # removes red dot when you left click
 from kivy.config import Config
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
-from kivy.animation import Animation
 
 ###
+from TopicCenter import TopicCenter, main
 from mathimg import make_img
-from backend.classes_data.OrderOfOperationsProblem import problems
 
-problem = problems[2] # Test from 0-2
-
-def loadProblem(self):
+def loadProblem(self, problem):
 	self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
 	self.ids.question.source = make_img(problem.getEquation(), 'output')
 	self.ids.question.reload()
@@ -26,8 +23,16 @@ def loadProblem(self):
 	if wrong_steps:
 		for i in range(0, 3):
 			id = getattr(self.ids, 'answerChoice' + str(i + 2))
-			id.source = make_img(wrong_steps[i], 'choice' + str(i + 2))
+			id.source = make_img(wrong_steps[i].step, 'choice' + str(i + 2))
 			id.reload()
+
+def load(self, topicName: str = None, loadNew: bool = False):
+	problemSet = main.selectSet(topicName) or main.getCurrentSet()
+	if loadNew:
+		problemSet.current = problemSet.high_score_index
+	problem = problemSet.getCurrentProblem()
+	loadProblem(self, problem)
+	
 ###
 
 # set window size to phone size 
@@ -46,32 +51,13 @@ class ProblemCards(Screen):
 
 	feedbackMode = False # added
 	
-	# Animates Card based on the correctness of Card
-	def animateCard(self, widget, *args):
-        # Animation when the step is incorrect
-		animateWrong = Animation(
-            background_color=(100/255, 42/255, 42/255, 1),
-            duration=0.5
-        )
-		animateWrong += Animation(
-            background_color=(25/255, 44/255, 132/255, 1)
-        )
-
-        # Animation when the step is correct
-		animateCorrect = Animation(
-            background_color=(183/255, 140/255, 56/255, 1),
-            duration=0.5,
-        )
-		animateCorrect += Animation(
-            background_color=(25/255, 44/255, 132/255, 1)
-        )
-
-		#animateCorrect.start(widget) or animateWrong.start(widget)
-
 	def __init__(self, **kw):
 		super().__init__(**kw)
 
-	def on_clickedButtonA(self, widget, *args):
+	def on_clickedButtonA(self):
+		if not main.current_set:
+			return # temporary sanity check
+		problem = main.getCurrentProblem()
 		if self.feedbackMode:
 			try:
 				problem.next()
@@ -79,11 +65,25 @@ class ProblemCards(Screen):
 				if wrong_steps:
 					for i in range(0, 3):
 						id = getattr(self.ids, 'answerChoice' + str(i + 2))
-						id.source = make_img(wrong_steps[i], 'choice' + str(i + 2))
+						id.source = make_img(wrong_steps[i].step, 'choice' + str(i + 2))
 						id.reload()
-			except IndexError:
-				problem.reset()
-				loadProblem(self)
+			except IndexError: # finished
+				problemSet = main.getCurrentSet()
+				if problemSet.current == len(problemSet.problems) - 1:
+					# done (put go back function call here)
+					self.feedbackMode = True # block feedback buttons
+					self.unload(True) # save
+					self.ids.question.source = make_img("You have reached the end!", 'output')
+					self.ids.question.reload()
+					for i in range(0, 4): # erase all
+						id = getattr(self.ids, 'answerChoice' + str(i + 1))
+						id.source = make_img('', 'choice' + str(i + 1))
+						id.reload()
+					return
+				else:
+					problemSet.next()
+				problem = problemSet.getCurrentProblem()
+				loadProblem(self, problem)
 			self.ids.answerChoice1.source = make_img(problem.getCurrentStep().step, 'choice1')
 			self.ids.answerChoice1.reload()
 			self.feedbackMode = False
@@ -94,113 +94,50 @@ class ProblemCards(Screen):
 		self.ids.answerChoice1.source = make_img(problem.getCurrentStep().feedback, 'choice1')
 		self.ids.answerChoice1.reload()
 		self.feedbackMode = True
-		
-		animateCorrect = Animation(
-            background_color=(183/255, 140/255, 56/255, 1),
-            duration=0.5,
-        )
-		animateCorrect += Animation(
-            background_color=(25/255, 44/255, 132/255, 1)
-        )
 
-		animateCorrect.start(widget)
-
-	def on_clickedButtonB(self, widget, *args):
-		animateWrong = Animation(
-        	background_color=(100/255, 42/255, 42/255, 1),
-        	duration=0.5
-    	)
-		animateWrong += Animation(
-        	background_color=(25/255, 44/255, 132/255, 1)
-    	)
-
-		wrong_steps = problem.getCurrentWrongSteps()
-
+	def on_clickedButtonB(self):
 		if not self.feedbackMode:
-			self.ids.answerChoice2.source = make_img(wrong_steps[0].feedback, 'choice2')
+			problem = main.getCurrentProblem()
+			self.ids.answerChoice2.source = make_img(problem.getCurrentWrongSteps()[0].feedback, 'choice2')
 			self.ids.answerChoice2.reload() # image refresh
-			animateWrong.start(widget)
-
-	def on_clickedButtonC(self, widget, *args):
-		animateWrong = Animation(
-            background_color=(100/255, 42/255, 42/255, 1),
-        	duration=0.5
-    	)
-		animateWrong += Animation(
-            background_color=(25/255, 44/255, 132/255, 1)
-        )
-
-		wrong_steps = problem.getCurrentWrongSteps()
-		
+	def on_clickedButtonC(self):
 		if not self.feedbackMode:
-			self.ids.answerChoice3.source = make_img(wrong_steps[1].feedback, 'choice3')
+			problem = main.getCurrentProblem()
+			self.ids.answerChoice3.source = make_img(problem.getCurrentWrongSteps()[1].feedback, 'choice3')
 			self.ids.answerChoice3.reload() # image refresh
-			animateWrong.start(widget)
-
-	def on_clickedButtonD(self, widget, *args):
-		animateWrong = Animation(
-            background_color=(100/255, 42/255, 42/255, 1),
-        	duration=0.5
-    	)
-		animateWrong += Animation(
-            background_color=(25/255, 44/255, 132/255, 1)
-        )
-
-		wrong_steps = problem.getCurrentWrongSteps()
-		
+	def on_clickedButtonD(self):
 		if not self.feedbackMode:
-			self.ids.answerChoice4.source = make_img(wrong_steps[2].feedback, 'choice4')
+			problem = main.getCurrentProblem()
+			self.ids.answerChoice4.source = make_img(problem.getCurrentWrongSteps()[2].feedback, 'choice4')
 			self.ids.answerChoice4.reload() # image refresh
-			animateWrong.start(widget)
+	def load(self, class_type: str = None):
+		load(self, class_type)
+	def unload(self, save: bool = False):
+		self.question = ''
+		self.strA = ''
+		self.strB = ''
+		self.strC = ''
+		self.strD = ''
 
-	def reload(self):
-		problem.reset()
-		loadProblem(self)
-
+		if save and main.getCurrentSet():
+			main.save()
+			main.getCurrentProblem().reset()
+			main.current_set = None
+	def reload(self, class_type: str):
+		self.unload()
+		self.load(class_type) # temporary
 
 class Elementary(Screen):
-	def update_progressBar(self, progress_bar_id, label_id):
-		# Grabs the current progress bar value
-		current = self.ids[progress_bar_id].value
-		# Increments value by 20%
-		current += .20
-		# Update the value of the progress bar
-		self.ids[progress_bar_id].value = current
-		# Update the Label
-		self.ids[label_id].text = f'{int(current*100)}%'
+	pass
 
 class MiddleSchool(Screen):
-	def update_progressBar(self, progress_bar_id, label_id):
-		# Grabs the current progress bar value
-		current = self.ids[progress_bar_id].value
-		# Increments value by 20%
-		current += .20
-		# Update the value of the progress bar
-		self.ids[progress_bar_id].value = current
-		# Update the Label
-		self.ids[label_id].text = f'{int(current*100)}%'
+	pass
 
 class HighSchool(Screen):
-	def update_progressBar(self, progress_bar_id, label_id):
-		# Grabs the current progress bar value
-		current = self.ids[progress_bar_id].value
-		# Increments value by 20%
-		current += .20
-		# Update the value of the progress bar
-		self.ids[progress_bar_id].value = current
-		# Update the Label
-		self.ids[label_id].text = f'{int(current*100)}%'
+	pass
 
 class College(Screen):
-	def update_progressBar(self, progress_bar_id, label_id):
-		# Grabs the current progress bar value
-		current = self.ids[progress_bar_id].value
-		# Increments value by 20%
-		current += .20
-		# Update the value of the progress bar
-		self.ids[progress_bar_id].value = current
-		# Update the Label
-		self.ids[label_id].text = f'{int(current*100)}%'
+	pass
 
 class WindowManager(ScreenManager):
 	pass
@@ -222,6 +159,9 @@ class LevelApp(App):
 		Window.clearcolor = (255, 255, 255)
 		return kv
 	
-
+	def on_stop(self):
+		main.save()
+		# save with pickle here
+	
 if __name__ == '__main__':
 	LevelApp().run()
