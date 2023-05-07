@@ -128,19 +128,69 @@ class ProblemCards(Screen):
 		self.load(class_type) # temporary
 
 class Elementary(Screen):
-	pass
+	def update_progressBar(self, progress_bar_id, label_id):
+		# Grabs the current progress bar value
+		current = self.ids[progress_bar_id].value
+		# Increments value by 20%
+		if current < 1:
+			current += .20
+		# Update the value of the progress bar
+		self.ids[progress_bar_id].value = current
+		# Update the Label
+		self.ids[label_id].text = f'{int(current*100)}%'
+
 
 class MiddleSchool(Screen):
-	pass
+	def update_progressBar(self, progress_bar_id, label_id):
+		# Grabs the current progress bar value
+		current = self.ids[progress_bar_id].value
+		# Increments value by 20%
+		if current < 1:
+			current += .20
+		# Update the value of the progress bar
+		self.ids[progress_bar_id].value = current
+		# Update the Label
+		self.ids[label_id].text = f'{int(current*100)}%'
+
 
 class HighSchool(Screen):
-	pass
+	def update_progressBar(self, progress_bar_id, label_id):
+		# Grabs the current progress bar value
+		current = self.ids[progress_bar_id].value
+		# Increments value by 20%
+		if current < 1:
+			current += .20
+		# Update the value of the progress bar
+		self.ids[progress_bar_id].value = current
+		# Update the Label
+		self.ids[label_id].text = f'{int(current*100)}%'
+
 
 class College(Screen):
-	pass
+	def update_progressBar(self, progress_bar_id, label_id):
+		# Grabs the current progress bar value
+		current = self.ids[progress_bar_id].value
+		# Increments value by 20%
+		if current < 1:
+			current += .20
+		# Update the value of the progress bar
+		self.ids[progress_bar_id].value = current
+		# Update the Label
+		self.ids[label_id].text = f'{int(current*100)}%'
+
 
 class WindowManager(ScreenManager):
-	pass
+	def update_progressBar(self, progress_bar_id, label_id):
+		# Grabs the current progress bar value
+		current = self.ids[progress_bar_id].value
+		# Increments value by 20%
+		if current < 1:
+			current += .20
+		# Update the value of the progress bar
+		self.ids[progress_bar_id].value = current
+		# Update the Label
+		self.ids[label_id].text = f'{int(current*100)}%'
+
 
 # for back button to return to previous screen
 class RootWidget(ScreenManager):

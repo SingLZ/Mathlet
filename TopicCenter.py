@@ -49,11 +49,32 @@ class TopicCenter():
         
         return "%.02f" % (sum/total)
     
-from backend.classes_data.FractionProblems import problems
+from backend.classes_data.FractionProblems import problems as FracProblems
+from backend.classes_data.QuadraticProblems import problems as QuadProblems
+from backend.classes_data.DerivativeProblems import problems as DeriProblems
+from backend.classes_data.OrderOfOperationsProblem import problems as OOOProblems
+
 main = TopicCenter(
     sets={
         'Fractions': ProblemSet(
-            (problems[0]) # add here
+            (FracProblems[0]),
+            (FracProblems[1]),
+            (FracProblems[2])# add here
+        ), 
+        'Quadratic': ProblemSet(
+            (QuadProblems[0]), 
+            (QuadProblems[1]),
+            (QuadProblems[2])
+        ),
+        'Derivative': ProblemSet(
+            (DeriProblems[0]),
+            (DeriProblems[1]),
+            (DeriProblems[2]),
+        ),
+        'PEMDAS': ProblemSet(
+            (OOOProblems[0]),
+            (OOOProblems[1]),
+            (OOOProblems[2]),
         )
     }
 )
