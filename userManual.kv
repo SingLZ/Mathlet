@@ -1,0 +1,74 @@
+#:kivy 2.1.0
+# include directive includes the contents of another .kv file
+#: include ProblemCards.kv
+
+# write screens here 
+WindowManager:
+    UserManual:
+
+<UserManual>
+    # making the user manual screen
+    name: "userManual"
+
+    ScrollView:
+        BoxLayout:
+            orientation: 'vertical'
+            size_hint_y: None
+            spacing: '10dp'
+            padding: ['10dp', '10dp', '10dp', '10dp']
+            height: self.minimum_height
+
+            Label:
+                markup: True
+                text: "[b]User Manual[/b]"
+                halign: 'center'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 40
+
+            Label:
+                markup: True
+                text: "[b]How To Start Mathlet[/b]"
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 30
+                text_size: self.width, None
+
+            Label:
+                markup: True
+                text: "The Mathlet Team is not planning to publish the application onto the App Store or Google Play Store. Please visit https://gitlab.cci.drexel.edu/fds23/63/team-15/mathlet to download the files on the main branch to run the application on your personal device. Specifically, run the ChooseMathLevelScreen.py file to render the entire application. The User needs to have LaTeX, the programming language Python, and the Kivy framework installed in their environment for the application to run successfully."
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None        
+
+            Label:
+                markup: True
+                text: "[b]Example Inputs and Outputs of Button Clicks[/b]"
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 30
+                text_size: self.width, None
+
+            Label:
+                markup: True
+                # 6 spaces for bullet point under
+                text: "[color=000000][size=15]•[/size][/color] First bullet point\n      [color=000000][size=15]•[/size][/color] Second bullet point\n[color=000000][size=15]•[/size][/color] Third bullet point"
+                halign: 'left'
+                valign: 'top'
+                color: (0, 0, 0, 1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None
