@@ -7,12 +7,17 @@ class ProblemSet():
     high_score_index: int = 0
 
     def __init__(self, *args) -> None:
-        if isinstance(args[0], set):
-            if len(args) == 0:
-                raise Exception('Problem set cannot be empty.')
-            self.problems = args[0]
-        else:
-            self.problems = (args)
+        if len(args) == 0:
+            raise Exception("Cannot run problem set with no arguments.")
+        new_args = []
+        for arg in args:
+            if isinstance(arg, set) or isinstance(arg, list):
+                new_args.extend(tuple(arg))
+            elif isinstance(arg, tuple):
+                new_args.extend(arg)
+            else:
+                new_args.append(arg)
+        self.problems = tuple(new_args) # becomes immutable
         self.current = 0
 
     def getProblems(self):
