@@ -53,7 +53,7 @@ from backend.classes_data.FractionProblems import problems
 main = TopicCenter(
     sets={
         'Fractions': ProblemSet(
-            (problems[0]) # add here
+            problems # add here
         )
     }
 )
