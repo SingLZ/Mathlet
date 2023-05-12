@@ -53,7 +53,7 @@ class TopicCenter():
     
 from backend.classes_data.DerivativeProblems import problems as DeriProblems
 from backend.classes_data.QuadraticProblems import problems as QuadraticProblems
-from backend.classes_data.OrderOfOperationsProblem import problems as OOOProblems
+from backend.classes_data.OrderOfOperationsProblems import problems as OOOProblems
 from backend.classes_data.FractionProblems import problems as FracProblems
 main = TopicCenter(
     sets={
