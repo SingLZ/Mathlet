@@ -1,6 +1,9 @@
 from backend.classes_data.problem import Problem
 from backend.classes_data.ProblemSet import ProblemSet
 from dataclasses import dataclass
+import pickle
+
+data_file_name = 'data.pickle'
 
 @dataclass
 class TopicCenter():
@@ -19,9 +22,7 @@ class TopicCenter():
         self.current_set = self.sets[set_name]
         try:
             self.topic_access_cache.index(set_name)
-        except:
-            pass
-        else:
+        except ValueError:
             self.topic_access_cache.append(set_name)
         return self.current_set
 
@@ -31,14 +32,27 @@ class TopicCenter():
     def getCurrentProblem(self) -> Problem:
         return self.getCurrentSet().getCurrentProblem()
     
-    def save(self):
+    def cache_scores(self): # overwrite data but not to file
         for set_name in self.topic_access_cache:
+            if self.sets[set_name].get_score() != 0:
+                print('NOT 0:', self.sets[set_name].get_score())
+            elif self.sets[set_name].current != 0:
+                print('but the current is not 0, its', self.sets[set_name].current)
             self.sets[set_name].save_score()
+        print("Cached, progress is: " + self.calculateCompositeCompletion())
+
+    def save(self): # true save
         print("Saved, progress is: " + self.calculateCompositeCompletion())
+        #with open(data_file_name, "w") as file:
+            #pickle.dump(self.sets, file)
         return self.sets
 
-    def load(self, sets: dict):
-        self.sets = sets
+    def load(self):
+        try:
+            with open(data_file_name, "rb") as file:
+                self.sets = pickle.load(file)
+        except FileNotFoundError:
+            pass
 
     def calculateCompositeCompletion(self) -> str: # average
         sum = 0

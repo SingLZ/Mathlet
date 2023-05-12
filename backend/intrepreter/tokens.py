@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 from enum import Enum
+import math
 
 class Operator(Enum):
     PLUS = "+"
@@ -19,6 +20,20 @@ class TokenType(Enum):
     RPAREN = 6,
     EXPONENT = 7,
     MOD = 8,
+    FUNCTION = 9,
+    WORD = 10,
+    EQUALS = 11,
+    VARIABLE = 12
+
+class Function(Enum):
+    sin = 1
+    cos = 2
+    tan = 3
+    asin = 4
+    acos = 5
+    atan = 6
+    sqrt = 7
+    ln = 8
 
 @dataclass
 class Token:

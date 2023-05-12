@@ -1,15 +1,18 @@
 from .nodes import *
 from .nodes import NumberNode as Number
+from typing import Callable
 
 class Interpreter:
-	def __init__(self, optionalNode = None):
-		if optionalNode:
-			return self.visit(optionalNode)
+	def __init__(self, hook: Callable = None):
+		self.__hook = hook
 
 	def visit(self, node):
 		method_name = f'visit_{type(node).__name__}'
 		method = getattr(self, method_name)
-		return method(node)
+		result = method(node)
+		if self.__hook:
+			self.__hook(result, type(node).__name__)
+		return result
 		
 	def visit_NumberNode(self, node):
 		return Number(node.value)
@@ -25,6 +28,12 @@ class Interpreter:
 
 	def visit_DivideNode(self, node):
 		return Number(self.visit(node.node_a).value / self.visit(node.node_b).value)
+	
+	def visit_ExponentNode(self, node):
+		return Number(self.visit(node.node_a).value**self.visit(node.node_b).value)
+
+	def visit_FunctionNode(self, node):
+		return Number(node.func(self.visit(node.node).value))
 	
 	def visit_PlusNode(self, node):
 		return Interpreter.visit_NumberNode(self, node.node)

@@ -1,4 +1,5 @@
-from .tokens import Token, TokenType
+from .tokens import Token, TokenType, Function
+import math
 
 class Lexer():
 	def __init__(self, text: str):
@@ -31,14 +32,20 @@ class Lexer():
 			elif self.current_char == '/':
 				self.advance()
 				yield Token(TokenType.DIVIDE)
+			elif self.current_char == '^':
+				self.advance()
+				yield Token(TokenType.EXPONENT)
 			elif self.current_char == '(':
 				self.advance()
 				yield Token(TokenType.LPAREN)
 			elif self.current_char == ')':
 				self.advance()
 				yield Token(TokenType.RPAREN)
-			#elif self.current_char.isalpha():
-
+			elif self.current_char == '=':
+				self.advance()
+				yield Token(TokenType.EQUALS)
+			elif self.current_char.isalpha():
+				yield self.generate_word()
 			else:
 				raise Exception(f"Illegal character '{self.current_char}'")
 
@@ -61,3 +68,23 @@ class Lexer():
 			num_str += '0'
 		
 		return Token(TokenType.NUMBER, float(num_str))
+	
+	def generate_word(self):
+		word = self.current_char
+		self.advance()
+
+		while self.current_char != None and (self.current_char == '.' or self.current_char.isalpha()):
+			word += self.current_char
+			self.advance()
+
+		if len(word) == 1:
+			if word == 'e':
+				return Token(TokenType.NUMBER, math.e)
+			return Token(TokenType.VARIABLE, word)
+		
+		if word == 'pi':
+			return Token(TokenType.NUMBER, math.pi)
+		elif getattr(Function, word):
+			return Token(TokenType.FUNCTION, getattr(math, word)) # placeholder for now, not meant to only use math
+		
+		return Token(TokenType.WORD, word)

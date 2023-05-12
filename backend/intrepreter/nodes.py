@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing import Callable
 
 @dataclass
 class NumberNode:
@@ -41,6 +42,22 @@ class DivideNode:
 
 	def __repr__(self):
 		return f"({self.node_a}/{self.node_b})"
+	
+@dataclass
+class ExponentNode:
+	node_a: any
+	node_b: any
+
+	def __repr__(self):
+		return f"({self.node_a}^{self.node_b})"
+	
+@dataclass
+class FunctionNode:
+	node: any
+	func: Callable
+
+	def __repr__(self):
+		return f'{str(self.func)}({self.node})'
 
 @dataclass
 class PlusNode:

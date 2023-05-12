@@ -42,6 +42,8 @@ class Problem():
         return self.Steps[len(self.Steps)-1].step
 
     def next(self):
+        if self.CurrentStep == len(self.Steps) - 1:
+            raise IndexError
         self.CurrentStep += 1
         return self.getCurrentStep()
 

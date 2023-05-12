@@ -45,8 +45,11 @@ class Parser:
 	def term(self):
 		result = self.factor()
 
-		while self.current_token != None and self.current_token.type in (TokenType.MULTIPLY, TokenType.DIVIDE):
-			if self.current_token.type == TokenType.MULTIPLY:
+		while self.current_token != None and self.current_token.type in (TokenType.MULTIPLY, TokenType.DIVIDE, TokenType.EXPONENT):
+			if self.current_token.type == TokenType.EXPONENT:
+				self.advance()
+				result = ExponentNode(result, self.factor())
+			elif self.current_token.type == TokenType.MULTIPLY:
 				self.advance()
 				result = MultiplyNode(result, self.factor())
 			elif self.current_token.type == TokenType.DIVIDE:
@@ -64,12 +67,6 @@ class Parser:
 		if token.type == TokenType.LPAREN:
 			self.advance()
 			result = self.expr()
-
-			if not self.current_token: # player didn't provide a right parenthesis
-				Error("Expected ')', got nothing at the end")
-			elif self.current_token.type != TokenType.RPAREN:
-				Error("Never reached ')'")
-			
 			self.advance()
 			return result
 		elif token.type == TokenType.NUMBER:
@@ -81,5 +78,8 @@ class Parser:
 		elif token.type == TokenType.MINUS:
 			self.advance()
 			return MinusNode(self.factor())
+		elif token.type == TokenType.FUNCTION:
+			self.advance()
+			return FunctionNode(self.factor(), token.value)
 		
 		Error()

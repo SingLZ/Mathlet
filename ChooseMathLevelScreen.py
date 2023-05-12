@@ -78,7 +78,7 @@ class ProblemCards(Screen):
 				else:
 					problemSet.next()
 				problem = problemSet.getCurrentProblem()
-				self.loadProblem(self, problem)
+				self.loadProblem()
 			loadInto(self.ids.answerChoice1, problem.getCurrentStep().step, 'choice1')
 			self.feedbackMode = False
 			return
@@ -106,7 +106,7 @@ class ProblemCards(Screen):
 		self.strD = ''
 
 		if save and main.getCurrentSet():
-			main.save()
+			main.cache_scores()
 			main.getCurrentProblem().reset()
 			main.current_set = None
 	def reload(self, class_type: str):
@@ -147,7 +147,6 @@ class LevelApp(App):
 	
 	def on_stop(self):
 		main.save()
-		# save with pickle here
 	
 if __name__ == '__main__':
 	LevelApp().run()

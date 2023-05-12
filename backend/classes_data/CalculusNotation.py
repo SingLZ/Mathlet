@@ -48,7 +48,7 @@ class Derivative():
     function: str
     variable_respect_to: str
     order: int = 1 # > 0
-
+    
     def latexify_quotient(self):
         if self.order == 1:
             return r'$\frac{' + 'd'+self.function + '}{' + 'd'+self.variable_respect_to +'}$'
