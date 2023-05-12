@@ -1,6 +1,5 @@
 #:kivy 2.1.0
 # include directive includes the contents of another .kv file
-#: include ProblemCards.kv
 
 # write screens here 
 WindowManager:
@@ -41,18 +40,29 @@ WindowManager:
 
             Label:
                 markup: True
-                text: "The Mathlet Team is not planning to publish the application onto the App Store or Google Play Store. Please visit https://gitlab.cci.drexel.edu/fds23/63/team-15/mathlet to download the files on the main branch to run the application on your personal device. Specifically, run the ChooseMathLevelScreen.py file to render the entire application. The User needs to have LaTeX, the programming language Python, and the Kivy framework installed in their environment for the application to run successfully."
+                text: "The Mathlet Team is not planning to publish the application onto the App Store or Google Play Store. Please visit https://gitlab.cci.drexel.edu/fds23/63/team-15/mathlet to download the files on the main branch to run the application on your personal device. Specifically, run the ChooseMathLevelScreen.py file to render the entire application."
                 halign: 'left'
                 valign: 'top'
                 color: (0,0,0,1)
                 size_hint: (1, None)
                 height: self.texture_size[1]
                 font_size: 15
-                text_size: self.width, None        
+                text_size: self.width, None      
 
             Label:
                 markup: True
-                text: "[b]Example Inputs and Outputs of Button Clicks[/b]"
+                text: "The User needs to have LaTeX, the programming language Python, and the Kivy framework installed in their environment for the application to run successfully."
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None  
+
+            Label:
+                markup: True
+                text: "[b]How to Use Different Features[/b]"
                 halign: 'left'
                 valign: 'top'
                 color: (0,0,0,1)
@@ -63,8 +73,19 @@ WindowManager:
 
             Label:
                 markup: True
+                text: "[b]Home Page:[/b]"
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None
+
+            Label:
+                markup: True
                 # 6 spaces for bullet point under
-                text: "[color=000000][size=15]•[/size][/color] First bullet point\n      [color=000000][size=15]•[/size][/color] Second bullet point\n[color=000000][size=15]•[/size][/color] Third bullet point"
+                text: "[color=000000][size=25]•[/size][/color] User Manual Button\n      [color=000000][size=15]•[/size][/color] Click on the User Manual Button on the Home Page to access the User Manual\n[color=000000][size=25]•[/size][/color] Choose Math Level Screen\n      [color=000000][size=15]•[/size][/color] Click on the Math Level button on the Home Page to access all the Math levels Mathlet provides\n      [color=000000][size=15]•[/size][/color] Click on the four buttons on the math level page to access the math level User wishes to learn\n      [color=000000][size=15]•[/size][/color] On the topics page, click on the button for the topic User wishes to tackle\n            [color=000000][size=15]•[/size][/color] Click the back button to access/ switch to other math levels"
                 halign: 'left'
                 valign: 'top'
                 color: (0, 0, 0, 1)
@@ -72,3 +93,116 @@ WindowManager:
                 height: self.texture_size[1]
                 font_size: 15
                 text_size: self.width, None
+
+            Label:
+                markup: True
+                text: "[b]Problem Cards Page:[/b]"
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None
+
+            Label:
+                markup: True
+                # 6 spaces for bullet point under
+                text: "[color=000000][size=25]•[/size][/color] Click on one of the 4 buttons to choose the [b]right answer[/b]\n      [color=000000][size=15]•[/size][/color] The right answer will display feedback for why the User’s answer is right\n      [color=000000][size=15]•[/size][/color] After User has clicked on the right answer, the User cannot click on the buttons for the wrong answers. User must move on to the next step\n[color=000000][size=25]•[/size][/color] Moving onto the [b]Next Problem[/b]\n      [color=000000][size=15]•[/size][/color] Clicking on the Correct Card Twice will allow the User to move on to the Next Problem\n      [color=000000][size=15]•[/size][/color] After User has completed all the steps for one problem, the User will move on to the next problem\n[color=000000][size=25]•[/size][/color] The [b]wrong answer[/b] will display feedback for why User’s answer is wrong"
+                halign: 'left'
+                valign: 'top'
+                color: (0, 0, 0, 1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None
+
+            Label:
+                markup: True
+                text: "[b]Back Button:[/b]"
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None
+
+            Label:
+                markup: True
+                # 6 spaces for bullet point under
+                text: "[color=000000][size=25]•[/size][/color] Problem Cards Page -> Topic Page -> Math Level Page -> Home Page\n[color=000000][size=25]•[/size][/color] User Manual Page -> Home Page"
+                halign: 'left'
+                valign: 'top'
+                color: (0, 0, 0, 1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None
+
+            Label:
+                markup: True
+                text: "[b]Progress Bar:[/b]"
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None
+
+            Label:
+                markup: True
+                # 6 spaces for bullet point under
+                text: "[color=000000][size=25]•[/size][/color] Progress bar will update based on how many problems the User has completed"
+                halign: 'left'
+                valign: 'top'
+                color: (0, 0, 0, 1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None
+
+            Label:
+                markup: True
+                text: "[b]Important Notice[/b]"
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 30
+                text_size: self.width, None
+            
+            Label:
+                markup: True
+                text: "To access the full Mathlet User Manual with pictures of features, please use this link:\n https://gitlab.cci.drexel.edu/fds23/63/team-15/mathlet/-/wikis/User-Manual"
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None 
+
+            Label:
+                markup: True
+                text: "[b]Contact Us[/b]"
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 30
+                text_size: self.width, None
+            
+            Label:
+                markup: True
+                text: "If you have any questions about this User Manual, you can contact us:\n\nBy email: MathletApp@gmail.com"
+                halign: 'left'
+                valign: 'top'
+                color: (0,0,0,1)
+                size_hint: (1, None)
+                height: self.texture_size[1]
+                font_size: 15
+                text_size: self.width, None 
