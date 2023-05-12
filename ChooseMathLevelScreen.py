@@ -9,31 +9,12 @@ from kivy.properties import StringProperty, ObjectProperty
 from kivy.config import Config
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
-###
 from TopicCenter import TopicCenter, main
 from mathimg import make_img
-
-def loadProblem(self, problem):
-	self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
-	self.ids.question.source = make_img(problem.getEquation(), 'output')
-	self.ids.question.reload()
-	self.ids.answerChoice1.source = make_img(problem.getCurrentStep().step, 'choice1')
-	self.ids.answerChoice1.reload()
-	wrong_steps = problem.getCurrentWrongSteps()
-	if wrong_steps:
-		for i in range(0, 3):
-			id = getattr(self.ids, 'answerChoice' + str(i + 2))
-			id.source = make_img(wrong_steps[i].step, 'choice' + str(i + 2))
-			id.reload()
-
-def load(self, topicName: str = None, loadNew: bool = False):
-	problemSet = main.selectSet(topicName) or main.getCurrentSet()
-	if loadNew:
-		problemSet.current = problemSet.high_score_index
-	problem = problemSet.getCurrentProblem()
-	loadProblem(self, problem)
 	
-###
+def loadInto(id, txt: str = '', fileName: str = 'output'):
+	id.source = make_img(txt, fileName)
+	id.reload() # image refresh
 
 # set window size to phone size 
 Window.size = (400,600)
@@ -54,6 +35,27 @@ class ProblemCards(Screen):
 	def __init__(self, **kw):
 		super().__init__(**kw)
 
+	def loadWrongSteps(self):
+		wrong_steps = main.getCurrentProblem().getCurrentWrongSteps()
+		if wrong_steps:
+			for i in range(2, 5): # [2, 5)
+				id = getattr(self.ids, f'answerChoice{i}')
+				loadInto(id, wrong_steps[i - 2].step, f'choice{i}')
+
+	def loadProblem(self):
+		problem = main.getCurrentProblem()
+		self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
+		loadInto(self.ids.question, problem.getEquation(), 'output')
+		loadInto(self.ids.answerChoice1, problem.getCurrentStep().step, 'choice1')
+		self.loadWrongSteps()
+
+	def loadTopic(self, topicName: str, loadNew: bool = False):
+		problemSet = main.selectSet(topicName) or main.getCurrentSet()
+		if loadNew:
+			problemSet.current = problemSet.high_score_index
+		#problem = problemSet.getCurrentProblem()
+		self.loadProblem()
+
 	def on_clickedButtonA(self):
 		if not main.current_set:
 			return # temporary sanity check
@@ -61,57 +63,41 @@ class ProblemCards(Screen):
 		if self.feedbackMode:
 			try:
 				problem.next()
-				wrong_steps = problem.getCurrentWrongSteps()
-				if wrong_steps:
-					for i in range(0, 3):
-						id = getattr(self.ids, 'answerChoice' + str(i + 2))
-						id.source = make_img(wrong_steps[i].step, 'choice' + str(i + 2))
-						id.reload()
+				self.loadWrongSteps()
 			except IndexError: # finished
 				problemSet = main.getCurrentSet()
 				if problemSet.current == len(problemSet.problems) - 1:
 					# done (put go back function call here)
 					self.feedbackMode = True # block feedback buttons
 					self.unload(True) # save
-					self.ids.question.source = make_img("You have reached the end!", 'output')
-					self.ids.question.reload()
-					for i in range(0, 4): # erase all
-						id = getattr(self.ids, 'answerChoice' + str(i + 1))
-						id.source = make_img('', 'choice' + str(i + 1))
-						id.reload()
+					loadInto(self.ids.question, "You have reached the end!", 'output')
+					for i in range(1, 5): # erase all	[1, 5)
+						id = getattr(self.ids, f'answerChoice{i}')
+						loadInto(id, '', f'choice{i}')
 					return
 				else:
 					problemSet.next()
 				problem = problemSet.getCurrentProblem()
-				loadProblem(self, problem)
-			self.ids.answerChoice1.source = make_img(problem.getCurrentStep().step, 'choice1')
-			self.ids.answerChoice1.reload()
+				self.loadProblem(self, problem)
+			loadInto(self.ids.answerChoice1, problem.getCurrentStep().step, 'choice1')
 			self.feedbackMode = False
 			return
 		self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
-		self.ids.question.source = make_img(f'{problem.strToCurrentStep()}', 'output')
-		self.ids.question.reload()
-		self.ids.answerChoice1.source = make_img(problem.getCurrentStep().feedback, 'choice1')
-		self.ids.answerChoice1.reload()
+		loadInto(self.ids.question, problem.strToCurrentStep(), 'output')
+		loadInto(self.ids.answerChoice1, problem.getCurrentStep().feedback, 'choice1')
 		self.feedbackMode = True
 
 	def on_clickedButtonB(self):
 		if not self.feedbackMode:
-			problem = main.getCurrentProblem()
-			self.ids.answerChoice2.source = make_img(problem.getCurrentWrongSteps()[0].feedback, 'choice2')
-			self.ids.answerChoice2.reload() # image refresh
+			loadInto(self.ids.answerChoice2, main.getCurrentProblem().getCurrentWrongSteps()[0].feedback, 'choice2')
 	def on_clickedButtonC(self):
 		if not self.feedbackMode:
-			problem = main.getCurrentProblem()
-			self.ids.answerChoice3.source = make_img(problem.getCurrentWrongSteps()[1].feedback, 'choice3')
-			self.ids.answerChoice3.reload() # image refresh
+			loadInto(self.ids.answerChoice3, main.getCurrentProblem().getCurrentWrongSteps()[1].feedback, 'choice3')
 	def on_clickedButtonD(self):
 		if not self.feedbackMode:
-			problem = main.getCurrentProblem()
-			self.ids.answerChoice4.source = make_img(problem.getCurrentWrongSteps()[2].feedback, 'choice4')
-			self.ids.answerChoice4.reload() # image refresh
+			loadInto(self.ids.answerChoice4, main.getCurrentProblem().getCurrentWrongSteps()[2].feedback, 'choice4')
 	def load(self, class_type: str = None):
-		load(self, class_type)
+		self.loadTopic(class_type)
 	def unload(self, save: bool = False):
 		self.question = ''
 		self.strA = ''
@@ -125,7 +111,7 @@ class ProblemCards(Screen):
 			main.current_set = None
 	def reload(self, class_type: str):
 		self.unload()
-		self.load(class_type) # temporary
+		self.loadTopic(class_type) # temporary
 
 class Elementary(Screen):
 	def update_progressBar(self, progress_bar_id, label_id):
@@ -139,7 +125,6 @@ class Elementary(Screen):
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
 
-
 class MiddleSchool(Screen):
 	def update_progressBar(self, progress_bar_id, label_id):
 		# Grabs the current progress bar value
@@ -151,7 +136,6 @@ class MiddleSchool(Screen):
 		self.ids[progress_bar_id].value = current
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
-
 
 class HighSchool(Screen):
 	def update_progressBar(self, progress_bar_id, label_id):
@@ -165,7 +149,6 @@ class HighSchool(Screen):
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
 
-
 class College(Screen):
 	def update_progressBar(self, progress_bar_id, label_id):
 		# Grabs the current progress bar value
@@ -178,19 +161,8 @@ class College(Screen):
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
 
-
 class WindowManager(ScreenManager):
-	def update_progressBar(self, progress_bar_id, label_id):
-		# Grabs the current progress bar value
-		current = self.ids[progress_bar_id].value
-		# Increments value by 20%
-		if current < 1:
-			current += .20
-		# Update the value of the progress bar
-		self.ids[progress_bar_id].value = current
-		# Update the Label
-		self.ids[label_id].text = f'{int(current*100)}%'
-
+	pass
 
 # for back button to return to previous screen
 class RootWidget(ScreenManager):

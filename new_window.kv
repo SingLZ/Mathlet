@@ -125,12 +125,12 @@ WindowManager:
                 root.manager.transition.direction = "right"
 
         RoundedButtonForTopic:
-            text: "Order Of Operations"
+            text: "Order of Operations"
             font_size: 20
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
-                app.root.current_screen.reload('PEMDAS')
+                app.root.current_screen.reload('Order of Operations')
                 root.manager.transition.direction = "left"
             # updates Progress Bar when button is pressed 
             on_press:
@@ -154,12 +154,12 @@ WindowManager:
             text_size: self.width, None
 
         RoundedButtonForTopic:
-            text: "Rounding Whole Numbers"
+            text: "Perimeters and Areas of Polygons"
             font_size: 20
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
-                #app.root.current_screen.reload('roundingNum')
+                #app.root.current_screen.reload('Perimeters and Areas of Polygons')
                 root.manager.transition.direction = "left"
             on_press:
                 app.root.get_screen("elementary").update_progressBar("roundNumProgressBar", "roundNumLabel")
@@ -235,7 +235,7 @@ WindowManager:
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
-                #app.root.current_screen.reload('Solving Equations With One Unknown')
+                #app.root.current_screen.reload('Solving Equations With\nOne Unknown')
                 root.manager.transition.direction = "left"
             # updates Progress Bar when button is pressed 
             on_press:
@@ -278,12 +278,12 @@ WindowManager:
                 root.manager.transition.direction = "right"
 
         RoundedButtonForTopic:
-            text: "Quadratic Equations\nwith Complex Solutions"
+            text: "Quadratic Equations\nwith Real Solutions"
             font_size: 20
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
-                app.root.current_screen.reload('Quadratic')
+                app.root.current_screen.reload('Quadratics')
                 root.manager.transition.direction = "left"
             # updates Progress Bar when button is pressed 
             on_press:
@@ -360,7 +360,7 @@ WindowManager:
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
-                app.root.current_screen.reload('Derivative')
+                app.root.current_screen.reload('Derivatives')
                 root.manager.transition.direction = "left"
             # updates Progress Bar when button is pressed 
             on_press:
@@ -389,7 +389,7 @@ WindowManager:
             #connect this button to card layout 
             on_release:
                 app.root.current = "ProblemCards"
-                #app.root.current_screen.reload('Integral')
+                #app.root.current_screen.reload('Integrals')
                 root.manager.transition.direction = "left"
             # updates Progress Bar when button is pressed 
             on_press:

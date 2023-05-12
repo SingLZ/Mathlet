@@ -16,6 +16,8 @@ class TopicCenter():
         return self.sets
 
     def selectSet(self, set_name: str) -> ProblemSet:
+        if not self.sets[set_name]:
+            raise Exception("Set name does not exist.")
         self.current_set = self.sets[set_name]
         try:
             self.topic_access_cache.index(set_name)
@@ -49,35 +51,26 @@ class TopicCenter():
         
         return "%.02f" % (sum/total)
     
-from backend.classes_data.FractionProblems import problems as FracProblems
-from backend.classes_data.QuadraticProblems import problems as QuadProblems
 from backend.classes_data.DerivativeProblems import problems as DeriProblems
+from backend.classes_data.QuadraticProblems import problems as QuadraticProblems
 from backend.classes_data.OrderOfOperationsProblem import problems as OOOProblems
-
+from backend.classes_data.FractionProblems import problems as FracProblems
 main = TopicCenter(
     sets={
         'Fractions': ProblemSet(
-            (FracProblems[0]),
-            (FracProblems[1]),
-            (FracProblems[2])# add here
-        ), 
-        'Quadratic': ProblemSet(
-            (QuadProblems[0]), 
-            (QuadProblems[1]),
-            (QuadProblems[2])
+            FracProblems # add here
         ),
-        'Derivative': ProblemSet(
-            (DeriProblems[0]),
-            (DeriProblems[1]),
-            (DeriProblems[2]),
+        'Derivatives': ProblemSet(
+            DeriProblems
         ),
-        'PEMDAS': ProblemSet(
-            (OOOProblems[0]),
-            (OOOProblems[1]),
-            (OOOProblems[2]),
+        'Order of Operations': ProblemSet(
+            OOOProblems
+        ),
+        'Quadratics' : ProblemSet(
+            QuadraticProblems
         )
-    }
-)
+        }
+    )
 
 '''
 main = TopicCenter(

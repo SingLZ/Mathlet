@@ -4,7 +4,7 @@ from .Quadratic import QuadraticEquation
 
 problems = [
     Problem(Equation='$x^2 + 3x + 2 = 0$', 
-        Steps=[Step(result = '$a = 1$  $b = 3$  $c = 2$', 
+        Steps=[Step(result = '$a = 1$,  $b = 3$,  $c = 2$', 
                     step ='Identify the a, b, c values', 
                     feedback="Correct and in this case: \n a = 1, b = 3, c = 2",
                     wrong_steps =(
@@ -44,7 +44,7 @@ problems = [
           ),
 
      Problem(Equation='$-3 + 5x + 2x^2 = 0$', 
-        Steps=[Step(result = '$a = 2$ $b = 5$ $c = -3$', 
+        Steps=[Step(result = '$a = 2$, $b = 5$, $c = -3$', 
                     step ='a = 2, b = 5, c = -3', 
                     feedback="Correct and in this case: \n a = 2, b = 5, c = -3",
                     wrong_steps =
@@ -85,7 +85,7 @@ problems = [
                ),
      
      Problem(Equation='$6x + 2x^2 + 4$', 
-        Steps=[Step(result = '$a = 2$ $b = 6$ $c = 4$', 
+        Steps=[Step(result = '$a = 2$, $b = 6$, $c = 4$', 
                     step ='a = 2, b = 6, c = 4', 
                     feedback="Correct: a, b, and c are \n identify base on \n their corresponding x term",
                     wrong_steps =

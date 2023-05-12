@@ -28,7 +28,7 @@ class QuadraticEquation:
             root2 = (-self.__b - discriminant**0.5) / (2*self.__a)
             return root1, root2
     def __str__(self):
-        stepOne = r'\frac{{-{0} \pm \sqrt{{{0}^2 - 4({1})({2})}}}}{{2({1})}}'.format(self.__b, self.__a, self.__c)
+        stepOne = r'\frac{{-({0}) \pm \sqrt{{{0}^2 - 4({1})({2})}}}}{{2({1})}}'.format(self.__b, self.__a, self.__c)
         return stepOne
     
     def stepTwo(self):
@@ -36,7 +36,7 @@ class QuadraticEquation:
         return stepTwo
     
     def stepThree(self):
-        stepThree = r'\frac{{-{0} \pm \sqrt{{{1}}}}}{{{2}}}'.format(self.__b, (self.__b**2)-(4*self.__a*self.__c), 2*self.__a)
+        stepThree = r'\frac{{-({0}) \pm \sqrt{{{1}}}}}{{{2}}}'.format(self.__b, (self.__b**2)-(4*self.__a*self.__c), 2*self.__a)
         return stepThree
     
 if __name__=="__main__":
