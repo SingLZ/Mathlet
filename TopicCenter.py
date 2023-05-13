@@ -21,9 +21,7 @@ class TopicCenter():
         self.current_set = self.sets[set_name]
         try:
             self.topic_access_cache.index(set_name)
-        except:
-            pass
-        else:
+        except ValueError:
             self.topic_access_cache.append(set_name)
         return self.current_set
 

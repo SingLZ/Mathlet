@@ -27,17 +27,21 @@ class ProblemSet():
         return self.problems[self.current]
 
     def next(self):
-        if self.current == len(self.problems):
+        if self.current == len(self.problems) - 1: # is last
+            print('failed, is last (ProblemSet.py)')
             return False
         self.current += 1
         return True
     
     def save_score(self, num: int = None): # for saving
         if not num:
-            num = self.current 
+            num = self.current
+            if self.getCurrentProblem().isAtAnswer():
+                num += 1
         if 0 <= num <= len(self.problems):
             self.high_score_index = num
-        raise IndexError
+        else:
+            raise IndexError(f"num = {num}")
     
     def get_score(self):
         return self.high_score_index

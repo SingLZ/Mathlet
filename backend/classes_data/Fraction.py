@@ -81,7 +81,20 @@ class Fraction:
 			#return str(self.__num)
 		#else:
 			#return str(self.__num) + "/" + str(self.__den)
-		
+
+class StringFraction():
+	def __init__(self, numerator: str | int | float, denominator: str | int | float = '1') -> None:
+		self.numerator = str(numerator)
+		self.denominator = str(denominator)
+	
+	def latexify(self):
+		if self.denominator == 1:
+			return f'${self.numerator}$'
+		return r'$\frac{'+self.numerator+r'}{'+self.denominator+r'}$'
+
+	def __repr__(self) -> str:
+		return self.numerator + '/' + self.denominator
+
 # TEST
 if __name__ == "__main__":
 	while True:
