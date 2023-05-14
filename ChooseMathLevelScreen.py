@@ -11,7 +11,11 @@ Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
 from TopicCenter import TopicCenter, main
 from mathimg import make_img
+from threading import Thread
 	
+def threadLoad(id, txt: str = '', fileName: str = 'output'):
+	loadInto(id, txt, fileName) #Thread(target=loadInto, args=(id, txt, fileName)).start()
+
 def loadInto(id, txt: str = '', fileName: str = 'output'):
 	id.source = make_img(txt, fileName)
 	id.reload() # image refresh
@@ -39,14 +43,14 @@ class ProblemCards(Screen):
 		wrong_steps = main.getCurrentProblem().getCurrentWrongSteps()
 		if wrong_steps:
 			for i in range(2, 5): # [2, 5)
-				id = getattr(self.ids, f'answerChoice{i}')
-				loadInto(id, wrong_steps[i - 2].step, f'choice{i}')
+				id = getattr(self.ids, f'answerChoice{i - 1}')
+				threadLoad(id, wrong_steps[i - 2].step, f'choice{i - 1}')
 
 	def loadProblem(self):
 		problem = main.getCurrentProblem()
 		self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
-		loadInto(self.ids.question, problem.getEquation(), 'output')
-		loadInto(self.ids.answerChoice1, problem.getCurrentStep().step, 'choice1')
+		threadLoad(self.ids.question, problem.getEquation(), 'output')
+		threadLoad(self.ids.answerChoice1, problem.getCurrentStep().step, 'choice1')
 		self.loadWrongSteps()
 
 	def loadTopic(self, topicName: str, loadNew: bool = False):
@@ -70,33 +74,34 @@ class ProblemCards(Screen):
 					# done (put go back function call here)
 					self.feedbackMode = True # block feedback buttons
 					self.unload(True) # save
-					loadInto(self.ids.question, "You have reached the end!", 'output')
+					threadLoad(self.ids.question, "You have reached the end!", 'output')
 					for i in range(1, 5): # erase all	[1, 5)
 						id = getattr(self.ids, f'answerChoice{i}')
-						loadInto(id, '', f'choice{i}')
+						threadLoad(id, '', f'choice{i}')
 					return
 				else:
 					problemSet.next()
 				problem = problemSet.getCurrentProblem()
 				self.loadProblem()
-			loadInto(self.ids.answerChoice1, problem.getCurrentStep().step, 'choice1')
+			threadLoad(self.ids.answerChoice1, problem.getCurrentStep().step, 'choice1')
 			self.feedbackMode = False
 			return
 		self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
-		loadInto(self.ids.question, problem.strToCurrentStep(), 'output')
-		loadInto(self.ids.answerChoice1, problem.getCurrentStep().feedback, 'choice1')
+		threadLoad(self.ids.question, problem.strToCurrentStep(), 'output')
+		threadLoad(self.ids.answerChoice1, problem.getCurrentStep().feedback, 'choice1')
 		self.feedbackMode = True
 
 	def on_clickedButtonB(self):
 		if not self.feedbackMode:
-			loadInto(self.ids.answerChoice2, main.getCurrentProblem().getCurrentWrongSteps()[0].feedback, 'choice2')
+			threadLoad(self.ids.answerChoice2, main.getCurrentProblem().getCurrentWrongSteps()[0].feedback, 'choice2')
 	def on_clickedButtonC(self):
 		if not self.feedbackMode:
-			loadInto(self.ids.answerChoice3, main.getCurrentProblem().getCurrentWrongSteps()[1].feedback, 'choice3')
+			threadLoad(self.ids.answerChoice3, main.getCurrentProblem().getCurrentWrongSteps()[1].feedback, 'choice3')
 	def on_clickedButtonD(self):
 		if not self.feedbackMode:
-			loadInto(self.ids.answerChoice4, main.getCurrentProblem().getCurrentWrongSteps()[2].feedback, 'choice4')
+			threadLoad(self.ids.answerChoice4, main.getCurrentProblem().getCurrentWrongSteps()[2].feedback, 'choice4')
 	def load(self, class_type: str = None):
+		self.topic = class_type
 		self.loadTopic(class_type)
 	def unload(self, save: bool = False):
 		self.question = ''
@@ -104,6 +109,7 @@ class ProblemCards(Screen):
 		self.strB = ''
 		self.strC = ''
 		self.strD = ''
+		self.topic = None
 
 		if save and main.getCurrentSet():
 			main.cache_scores()
