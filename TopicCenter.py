@@ -1,8 +1,7 @@
 from backend.classes_data.problem import Problem
 from backend.classes_data.ProblemSet import ProblemSet
-from dataclasses import dataclass
+import pickle
 
-@dataclass
 class TopicCenter():
     def __init__(self, sets: dict):
         self.sets = sets
@@ -32,13 +31,22 @@ class TopicCenter():
         return self.getCurrentSet().getCurrentProblem()
     
     def save(self):
+        pass
+        #with open('user_data.pickle', 'wb') as f:
+            #pickle.dump(self.sets, f)
+
+    def cache_scores(self):
         for set_name in self.topic_access_cache:
             self.sets[set_name].save_score()
         print("Saved, progress is: " + self.calculateCompositeCompletion())
         return self.sets
 
-    def load(self, sets: dict):
-        self.sets = sets
+    def load(self, sets: dict = None):
+        if sets:
+            self.sets = sets
+        else:
+            with open('user_data.pickle', 'rb') as f:
+                self.sets = pickle.load(f)
 
     def calculateCompositeCompletion(self) -> str: # average
         sum = 0
