@@ -20,6 +20,15 @@ class Problem():
 
     CurrentStep = 0 # index for Steps
 
+    def __post_init__(self):
+        for step_index, step in enumerate(self.Steps):
+            if not isinstance(step, Step):
+                raise ValueError(f"Non-step object detected in Steps in index {step_index}.")
+            if step.wrong_steps:
+                for index, wrong_step in enumerate(step.wrong_steps):
+                    if not isinstance(wrong_step, Step):
+                        raise ValueError(f"Non-step object detected in the wrong steps of step index {index}.")
+
     def getCurrentStep(self) -> Step:
         return self.Steps[self.CurrentStep]
     
@@ -42,6 +51,8 @@ class Problem():
         return self.Steps[len(self.Steps)-1].step
 
     def next(self):
+        if self.isAtAnswer():
+            raise IndexError
         self.CurrentStep += 1
         return self.getCurrentStep()
 
