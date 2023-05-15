@@ -12,7 +12,13 @@ Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 from TopicCenter import TopicCenter, main
 from mathimg import make_img
 from threading import Thread
-	
+
+def getProgressBarId(name: str):
+	return name.lower() + 'ProgressBar'
+
+def getLabelId(name: str):
+	return name.lower() + 'Label'
+
 def threadLoad(id, txt: str = '', fileName: str = 'output'):
 	loadInto(id, txt, fileName) #Thread(target=loadInto, args=(id, txt, fileName)).start()
 
@@ -132,12 +138,17 @@ class Elementary(Screen):
 		self.ids[label_id].text = f'{int(current*100)}%'
 
 class MiddleSchool(Screen):
-	def update_progressBar(self, progress_bar_id, label_id):
-		# Grabs the current progress bar value
-		current = self.ids[progress_bar_id].value
-		# Increments value by 20%
-		if current < 1:
-			current += .20
+	def update_progressBar(self, progress_bar_id, label_id, class_name: str = None):
+		current = None
+		if class_name:
+			current = main.getSets()[class_name].get_score()
+			print(f'recorded score is: {current}')
+		else:
+			# Grabs the current progress bar value
+			current = self.ids[progress_bar_id].value
+			# Increments value by 20%
+			if current < 1:
+				current += .20
 		# Update the value of the progress bar
 		self.ids[progress_bar_id].value = current
 		# Update the Label
