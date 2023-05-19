@@ -43,9 +43,12 @@ class ProblemSet():
         else:
             raise IndexError(f"num = {num}")
     
-    def get_score(self):
+    def get_high_score(self):
         return self.high_score_index
     
+    def get_score(self):
+        return self.high_score_index/len(self.getProblems())
+
     def getCurrentProgress(self) -> str: # from 0 to 1 (float)
         return '%.02f' % self.current/len(self.problems)
     
