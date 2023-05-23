@@ -28,8 +28,8 @@ def make_img(txt: str, fileName: str = 'output', format: str = 'png', customDpi:
     
     fig.savefig(fileName, dpi=customDpi, transparent=True, bbox_inches='tight', pad_inches=0.1) # adjust padding here
     fig.clear()
-    if default_timer() - then > 0.5:
-        print('test', '%.4f' % (default_timer() - then))
+    if default_timer() - then > 0.6:
+        print('image load time:', '%.4f' % (default_timer() - then))
     return fileName
 
 # make_img is the fastest, but make_bytes is the best for network connectivity, so only use if transferring images
