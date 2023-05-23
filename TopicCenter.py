@@ -3,7 +3,7 @@ from backend.classes_data.ProblemSet import ProblemSet
 import pickle
 
 class TopicCenter():
-    def __init__(self, sets: dict):
+    def __init__(self, sets: dict = None):
         self.sets = sets
         self.current_set: ProblemSet = None
         self.topic_access_cache = []
@@ -31,24 +31,25 @@ class TopicCenter():
         return self.getCurrentSet().getCurrentProblem()
     
     def save(self):
-        pass
-        #with open('user_data.pickle', 'wb') as f:
-            #pickle.dump(self.sets, f)
+        print("Saving has occurred")
+        with open('user_data.pickle', 'wb') as f:
+            pickle.dump(self.sets, f)
 
     def cache_scores(self):
         for set_name in self.topic_access_cache:
             self.sets[set_name].save_score()
-        print("Saved, progress is: " + self.calculateCompositeCompletion())
+        print("Saved, total progress is: " + self.calculateCompositeCompletion())
         return self.sets
 
     def load(self, sets: dict = None):
-        if sets:
-            self.sets = sets
-        else:
+        try:
             with open('user_data.pickle', 'rb') as f:
                 self.sets = pickle.load(f)
-
-    def calculateCompositeCompletion(self) -> str: # average
+            return True
+        except FileNotFoundError:
+            return False
+            
+    def calculateCompositeCompletion(self) -> str: # kept for future statistics/analytics
         sum = 0
         total = 0
         for problemSet in self.getSets().values():
@@ -61,10 +62,12 @@ from backend.classes_data.DerivativeProblems import problems as DeriProblems
 from backend.classes_data.QuadraticProblems import problems as QuadraticProblems
 from backend.classes_data.OrderOfOperationsProblems import problems as OOOProblems
 from backend.classes_data.FractionProblems import problems as FracProblems
-main = TopicCenter(
-    sets={
+
+main = TopicCenter()
+if not main.load():
+    main.sets = {
         'Fractions': ProblemSet(
-            FracProblems # add here
+            FracProblems
         ),
         'Derivatives': ProblemSet(
             DeriProblems
@@ -75,8 +78,7 @@ main = TopicCenter(
         'Quadratics' : ProblemSet(
             QuadraticProblems
         )
-        }
-    )
+    }
 
 '''
 main = TopicCenter(
@@ -95,7 +97,7 @@ main = TopicCenter(
 encase arguments in problem sets with sets
 '''
 
-if __name__ == "__main__":
+if __name__ == "__main__": # debug print
     main.selectSet('Fractions')
     for i in main.cycleProblems():
         print(i)
