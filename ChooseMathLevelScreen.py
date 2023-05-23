@@ -8,10 +8,9 @@ from kivy.properties import StringProperty, ObjectProperty
 # removes red dot when you left click
 from kivy.config import Config
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
-
-from TopicCenter import TopicCenter, main
+#
+from TopicCenter import main
 from mathimg import make_img
-from threading import Thread
 
 def getProgressBarId(name: str):
 	return name.lower() + 'ProgressBar'
@@ -26,7 +25,6 @@ def loadInto(id, txt: str = '', fileName: str = 'output'):
 # set window size to phone size 
 Window.size = (400,600)
 
-#Define different Screens
 class LevelWindow(Screen):
 	pass
 
@@ -36,8 +34,9 @@ class ProblemCards(Screen):
 	strC = StringProperty("C")
 	strD = StringProperty("D")
 	question = StringProperty("Question")
+	currentCorrectChoice = 'A'
 
-	feedbackMode = False # added
+	feedbackMode = False
 	
 	def __init__(self, **kw):
 		super().__init__(**kw)
@@ -46,7 +45,7 @@ class ProblemCards(Screen):
 		wrong_steps = main.getCurrentProblem().getCurrentWrongSteps()
 		if wrong_steps:
 			for i in range(2, 5): # [2, 5)
-				id = getattr(self.ids, f'answerChoice{i - 1}')
+				id = getattr(self.ids, f'answerChoice{i}')
 				loadInto(id, wrong_steps[i - 2].step, f'choice{i}')
 
 	def loadProblem(self):
@@ -63,10 +62,11 @@ class ProblemCards(Screen):
 		#problem = problemSet.getCurrentProblem()
 		self.loadProblem()
 
-	def on_clickedButtonA(self):
+	def correctAnswer(self, choiceNumber: int):
 		if not main.current_set:
 			return # temporary sanity check
 		problem = main.getCurrentProblem()
+		choiceId = self.ids[f'answerChoice{choiceNumber}']
 		if self.feedbackMode:
 			try:
 				problem.next()
@@ -86,23 +86,31 @@ class ProblemCards(Screen):
 					problemSet.next()
 				problem = problemSet.getCurrentProblem()
 				self.loadProblem()
-			loadInto(self.ids.answerChoice1, problem.getCurrentStep().step, 'choice1')
+			loadInto(choiceId, problem.getCurrentStep().step, 'choice1')
 			self.feedbackMode = False
 			return
 		self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
 		loadInto(self.ids.question, problem.strToCurrentStep(), 'output')
-		loadInto(self.ids.answerChoice1, problem.getCurrentStep().feedback, 'choice1')
-		self.feedbackMode = True
+		loadInto(choiceId, problem.getCurrentStep().feedback, f'choice{choiceNumber}')
+		self.feedbackMode = True 
+
+	def wrongAnswer(self, choiceNumber: int):
+		if not self.feedbackMode:
+			loadInto(self.ids[f'answerChoice{choiceNumber}'], main.getCurrentProblem().getCurrentWrongSteps()[0].feedback, f'choice{choiceNumber}')
+
+	def on_clickedButtonA(self):
+		# example use:
+		self.correctAnswer(1)
 
 	def on_clickedButtonB(self):
-		if not self.feedbackMode:
-			loadInto(self.ids.answerChoice2, main.getCurrentProblem().getCurrentWrongSteps()[0].feedback, 'choice2')
+		self.wrongAnswer(2)
+
 	def on_clickedButtonC(self):
-		if not self.feedbackMode:
-			loadInto(self.ids.answerChoice3, main.getCurrentProblem().getCurrentWrongSteps()[1].feedback, 'choice3')
+		self.wrongAnswer(3)
+
 	def on_clickedButtonD(self):
-		if not self.feedbackMode:
-			loadInto(self.ids.answerChoice4, main.getCurrentProblem().getCurrentWrongSteps()[2].feedback, 'choice4')
+		self.wrongAnswer(4)
+		
 	def load(self, class_type: str = None):
 		self.topic = class_type
 		self.loadTopic(class_type)
@@ -133,13 +141,18 @@ class Elementary(Screen):
 		self.ids[progress_bar_id].value = current
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
+	
+	def on_kv_post(self, *args):
+		self.load()
+	
+	def load(self):
+		pass
 
 class MiddleSchool(Screen):
 	def update_progressBar(self, progress_bar_id, label_id, class_name: str = None):
 		current = None
 		if class_name:
 			current = main.getSets()[class_name].get_score()
-			print(f'recorded score is: {current}')
 		else:
 			# Grabs the current progress bar value
 			current = self.ids[progress_bar_id].value
@@ -150,6 +163,12 @@ class MiddleSchool(Screen):
 		self.ids[progress_bar_id].value = current
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
+
+	def on_kv_post(self, *args):
+		self.load()
+	
+	def load(self):
+		self.update_progressBar("fractionProgressBar", "fractionLabel", "Fractions")
 
 class HighSchool(Screen):
 	def update_progressBar(self, progress_bar_id, label_id):
@@ -162,6 +181,12 @@ class HighSchool(Screen):
 		self.ids[progress_bar_id].value = current
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
+	
+	def on_kv_post(self, *args):
+		self.load()
+	
+	def load(self):
+		pass
 
 class College(Screen):
 	def update_progressBar(self, progress_bar_id, label_id):
@@ -174,6 +199,12 @@ class College(Screen):
 		self.ids[progress_bar_id].value = current
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
+
+	def on_kv_post(self, *args):
+		self.load()
+	
+	def load(self):
+		pass
 
 class WindowManager(ScreenManager):
 	pass
@@ -189,7 +220,7 @@ class LevelApp(App):
 	# for back button in ProblemCards.kv to return to previous screen
 	def __init__(self, **kwargs):
 		super(LevelApp, self).__init__(**kwargs)
-		self.previous_screen = "" 
+		self.previous_screen = ""
 
 	def build(self):
 		Window.clearcolor = (255, 255, 255)
