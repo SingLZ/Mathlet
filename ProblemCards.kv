@@ -32,6 +32,7 @@ WindowManager:
                 root.manager.transition.direction = "right"
                 # reload the current screen to refresh it
                 root.manager.get_screen('ProblemCards').unload(True)
+                app.root.get_screen("middleSchool").update_progressBar("fractionProgressBar", "fractionLabel", "Fractions")
 
 
         # using disabled rounded button to display question
