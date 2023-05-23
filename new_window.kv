@@ -199,7 +199,7 @@ WindowManager:
             on_release: 
                 app.root.current = "home"
                 root.manager.transition.direction = "right"
-
+        
         RoundedButtonForTopic:
             text: "Fractions"
             font_size: 20
@@ -209,8 +209,6 @@ WindowManager:
                 app.root.current_screen.reload('Fractions')
                 root.manager.transition.direction = "left"
             # updates Progress Bar when button is pressed 
-            on_press:
-                app.root.get_screen("middleSchool").update_progressBar("fractionProgressBar", "fractionLabel", "Fractions")
         
         ProgressBar:
             id: fractionProgressBar
