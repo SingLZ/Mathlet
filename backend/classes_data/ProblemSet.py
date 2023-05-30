@@ -20,6 +20,9 @@ class ProblemSet():
         self.problems = tuple(new_args) # becomes immutable
         self.current = 0
 
+    def reset(self):
+        self.current = 0
+
     def getProblems(self):
         return self.problems
 
