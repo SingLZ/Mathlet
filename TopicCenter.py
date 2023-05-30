@@ -31,7 +31,6 @@ class TopicCenter():
         return self.getCurrentSet().getCurrentProblem()
     
     def save(self):
-        print("Saving has occurred")
         with open('user_data.pickle', 'wb') as f:
             pickle.dump(self.sets, f)
 
@@ -64,7 +63,7 @@ from backend.classes_data.OrderOfOperationsProblems import problems as OOOProble
 from backend.classes_data.FractionProblems import problems as FracProblems
 
 main = TopicCenter()
-if not main.load():
+if not main.load(): # to reload the entire save, remove the .pickle file
     main.sets = {
         'Fractions': ProblemSet(
             FracProblems
