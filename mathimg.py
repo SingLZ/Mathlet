@@ -50,10 +50,9 @@ def fill(text, width=70):
                 last_word_match = re.search(r'\b\w+$', current_line) # last word fits in remaining space
                 if last_word_match:
                     last_word = last_word_match.group()
-                    word_length = len(last_word)
 
                     # word fits on next line
-                    if word_length > width:
+                    if len(last_word) > width:
                         # if huge word, make it its own line
                         lines.append(current_line.rstrip())
                         current_line = last_word
@@ -62,9 +61,6 @@ def fill(text, width=70):
                         current_line = current_line[:last_word_match.start()].rstrip()
                         lines.append(current_line)
                         current_line = last_word
-                else:
-                    lines.append(current_line.rstrip())
-                    current_line = ""
                 line_length = len(current_line)
 
     if current_line:
