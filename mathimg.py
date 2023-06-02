@@ -45,12 +45,11 @@ def fill(text, width=70):
             current_line += char
             line_length += 1
 
-            # Check if the current line exceeds the width
             if line_length >= width:
                 # If the line ends with a space, remove it
-                current_line = current_line.rstrip()
-                if current_line[-1] == " ":
-                    current_line = current_line[:-1]
+                #current_line = current_line.rstrip()
+                #if current_line[-1] == " ":
+                    #current_line = current_line[:-1]
 
                 # Check if the last word can fit in the remaining space
                 last_word_match = re.search(r'\b\w+$', current_line)
@@ -127,6 +126,7 @@ thread.start()
 
 if __name__ == "__main__":
     thread.join()
+    #print(fill('Correct! We move onto multiplication after parentheses'))
     # empty
 
 #render_output([r'$\frac{1}{2} + \frac{1}{3}$', r'$\frac{1}{3} + \frac{4}{3}$', r'$\frac{x}{z} + \frac{2}{y}$'])
