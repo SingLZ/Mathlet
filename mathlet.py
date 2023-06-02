@@ -9,7 +9,7 @@ from kivy.properties import StringProperty, ObjectProperty
 # removes red dot when you left click
 from kivy.config import Config
 Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
-#
+
 from TopicCenter import main
 from mathimg import make_img
 from timeit import default_timer
@@ -121,7 +121,6 @@ class ProblemCards(Screen):
 	def load(self, class_type: str = None):
 		self.topic = class_type
 		self.feedbackMode = False
-		print("feedback set false")
 		self.loadTopic(class_type)
 	def unload(self, save: bool = False):
 		self.question = ''
