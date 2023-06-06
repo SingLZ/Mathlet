@@ -13,6 +13,7 @@ from TopicCenter import main
 from mathimg import make_img
 from kivy.core.audio import SoundLoader
 from timeit import default_timer
+from random import randint
 
 def getProgressBarId(name: str):
 	return name.lower() + 'ProgressBar'
@@ -47,25 +48,46 @@ class ProblemCards(Screen):
 	strC = StringProperty("C")
 	strD = StringProperty("D")
 	question = StringProperty("Question")
-	currentCorrectChoice = 'A'
+	currentCorrectChoice = None # index
+	currentWrongChoices = [] # indices
 
 	feedbackMode = False
 	
 	def __init__(self, **kw):
 		super().__init__(**kw)
 
+	def randomize_correct_choice(self):
+		self.currentCorrectChoice = randint(1, 4)
+
+	def generate_wrong_steps(self):
+		self.currentWrongChoices.clear()
+		available_wrong_choices = [0, 1, 2, 3]
+		del available_wrong_choices[self.currentCorrectChoice-1]
+		while (len(available_wrong_choices) != 0):
+			self.currentWrongChoices.append(available_wrong_choices.pop(randint(0, len(available_wrong_choices) - 1)))
+
 	def loadWrongSteps(self):
-		wrong_steps = main.getCurrentProblem().getCurrentWrongSteps()
-		if wrong_steps:
-			for i in range(2, 5): # [2, 5)
-				id = getattr(self.ids, f'answerChoice{i}')
-				loadInto(id, wrong_steps[i - 2].step, f'choice{i}')
+		problem = main.getCurrentProblem()
+		self.generate_wrong_steps()
+		wrong_steps = problem.getCurrentWrongSteps()
+		for stepIndex, choiceIndex in enumerate(self.currentWrongChoices):
+			id = getattr(self.ids, f'answerChoice{choiceIndex+1}')
+			print(f"stepIndex: {stepIndex}")
+			loadInto(id, wrong_steps[stepIndex].step, f'choice{choiceIndex+1}')
+
+	# def loadWrongSteps(self):
+	# 	wrong_steps = main.getCurrentProblem().getCurrentWrongSteps()
+	# 	if wrong_steps:
+	# 		for i in range(2, 5): # [2, 5)
+	# 			id = getattr(self.ids, f'answerChoice{i}')
+	# 			loadInto(id, wrong_steps[i - 2].step, f'choice{i}')
 
 	def loadProblem(self):
 		problem = main.getCurrentProblem()
 		self.ids.stepcounter.text = f'Step {problem.CurrentStep+1} of {len(problem.Steps)}'
 		loadInto(self.ids.question, problem.getEquation(), 'output')
-		loadInto(self.ids.answerChoice1, problem.getCurrentStep().step, 'choice1')
+		self.randomize_correct_choice()
+		loadInto(getattr(super().ids, f"answerChoice{self.currentCorrectChoice}"), problem.getCurrentStep().step, f'choice{self.currentCorrectChoice}')
 		self.loadWrongSteps()
 
 	def loadTopic(self, topicName: str, loadNew: bool = False):
@@ -76,17 +98,16 @@ class ProblemCards(Screen):
 
 	def correctAnswer(self, choiceNumber: int):
 		if not main.current_set:
-			return # temporary sanity check
+			return # sanity check
 		problem = main.getCurrentProblem()
 		choiceId = self.ids[f'answerChoice{choiceNumber}']
 		if self.feedbackMode:
 			try:
 				problem.next()
-				self.loadWrongSteps()
+				self.loadProblem()
 			except IndexError: # finished
 				problemSet = main.getCurrentSet()
 				if problemSet.current == len(problemSet.problems) - 1:
-					# done (put go back function call here)
 					self.feedbackMode = True # block feedback buttons
 					self.unload(True) # save
 					loadInto(self.ids.question, "You have reached the end!", 'output')
@@ -109,21 +130,25 @@ class ProblemCards(Screen):
 	def wrongAnswer(self, choiceNumber: int):
 		if not self.feedbackMode:
 			loadInto(self.ids[f'answerChoice{choiceNumber}'], main.getCurrentProblem().getCurrentWrongSteps()[choiceNumber-2].feedback, f'choice{choiceNumber}')
+	
+	def answer(self, choiceNumber: int):
+		if self.currentCorrectChoice == choiceNumber:
+			self.correctAnswer(choiceNumber)
 		else:
-			print("Paused")
+			self.wrongAnswer(choiceNumber)
 
 	def on_clickedButtonA(self):
 		# example use:
-		self.correctAnswer(1)
+		self.answer(1)
 
 	def on_clickedButtonB(self):
-		self.wrongAnswer(2)
+		self.answer(2)
 
 	def on_clickedButtonC(self):
-		self.wrongAnswer(3)
+		self.answer(3)
 
 	def on_clickedButtonD(self):
-		self.wrongAnswer(4)
+		self.answer(4)
 		
 	def load(self, class_type: str = None):
 		self.topic = class_type
@@ -158,7 +183,7 @@ class Elementary(Screen):
 	def update_progressBar(self, progress_bar_id, label_id, class_name: str = None):
 		current = None
 		if class_name:
-			current = main.getSets()[class_name].get_score()
+			current = main.peekSet(class_name).get_score()
 		else:
 			# Grabs the current progress bar value
 			current = self.ids[progress_bar_id].value
@@ -189,7 +214,7 @@ class MiddleSchool(Screen):
 	def update_progressBar(self, progress_bar_id, label_id, class_name: str = None):
 		current = None
 		if class_name:
-			current = main.getSets()[class_name].get_score()
+			current = main.peekSet(class_name).get_score()
 		else:
 			# Grabs the current progress bar value
 			current = self.ids[progress_bar_id].value
@@ -220,7 +245,7 @@ class HighSchool(Screen):
 	def update_progressBar(self, progress_bar_id, label_id, class_name: str = None):
 		current = None
 		if class_name:
-			current = main.getSets()[class_name].get_score()
+			current = main.peekSet(class_name).get_score()
 		else:
 			# Grabs the current progress bar value
 			current = self.ids[progress_bar_id].value
@@ -251,7 +276,7 @@ class College(Screen):
 	def update_progressBar(self, progress_bar_id, label_id, class_name: str = None):
 		current = None
 		if class_name:
-			current = main.getSets()[class_name].get_score()
+			current = main.peekSet(class_name).get_score()
 		else:
 			# Grabs the current progress bar value
 			current = self.ids[progress_bar_id].value
