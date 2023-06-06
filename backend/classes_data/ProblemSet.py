@@ -22,6 +22,8 @@ class ProblemSet():
 
     def reset(self):
         self.current = 0
+        for problem in self.getProblems():
+            problem.reset()
 
     def getProblems(self):
         return self.problems

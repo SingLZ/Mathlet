@@ -37,7 +37,7 @@ class TopicCenter():
     def cache_scores(self):
         for set_name in self.topic_access_cache:
             self.sets[set_name].save_score()
-        print("Saved, total progress is: " + self.calculateCompositeCompletion())
+            self.sets[set_name].reset()
         return self.sets
 
     def load(self, sets: dict = None):
@@ -63,7 +63,7 @@ from backend.classes_data.OrderOfOperationsProblems import problems as OOOProble
 from backend.classes_data.FractionProblems import problems as FracProblems
 
 main = TopicCenter()
-if not main.load(): # to reload the entire save, remove the .pickle file
+if not main.load(): # to reload the entire save, remove the .pickle file   
     main.sets = {
         'Fractions': ProblemSet(
             FracProblems
