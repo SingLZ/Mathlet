@@ -13,6 +13,9 @@ class TopicCenter():
 
     def getSets(self) -> dict:
         return self.sets
+    
+    def peekSet(self, set_name: str) -> dict:
+        return self.sets[set_name]
 
     def selectSet(self, set_name: str) -> ProblemSet:
         if not self.sets[set_name]:
