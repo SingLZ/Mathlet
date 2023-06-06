@@ -1,6 +1,5 @@
 from kivy.app import App
-from kivy.loader import Loader
-from kivy.uix.widget import Widget 
+from kivy.uix.widget import Widget
 from kivy.uix.image import Image
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
@@ -12,6 +11,7 @@ Config.set('input', 'mouse', 'mouse,multitouch_on_demand')
 
 from TopicCenter import main
 from mathimg import make_img
+from kivy.core.audio import SoundLoader
 from timeit import default_timer
 
 def getProgressBarId(name: str):
@@ -31,8 +31,15 @@ def loadInto(id, txt: str = '', fileName: str = 'output'):
 # set window size to phone size 
 Window.size = (400,600)
 
+#Define different Screens
 class LevelWindow(Screen):
-	pass
+	def play_button_sound(self):
+		self.button_sound = SoundLoader.load('button.wav')
+		self.button_sound.loop = False
+		if self.ids.volume.source == "volume.png":
+			self.button_sound.play()
+		else:
+			self.button_sound.stop()
 
 class ProblemCards(Screen):
 	strA = StringProperty("A")
@@ -139,23 +146,44 @@ class ProblemCards(Screen):
 		self.loadTopic(class_type) # temporary
 		self.feedbackMode = False
 
+	def play_button_sound(self):
+		self.button_sound = SoundLoader.load('button.wav')
+		self.button_sound.loop = False
+		if self.ids.volume.source == "volume.png":
+			self.button_sound.play()
+		else:
+			self.button_sound.stop()
+
 class Elementary(Screen):
-	def update_progressBar(self, progress_bar_id, label_id):
-		# Grabs the current progress bar value
-		current = self.ids[progress_bar_id].value
-		# Increments value by 20%
-		if current < 1:
-			current += .20
+	def update_progressBar(self, progress_bar_id, label_id, class_name: str = None):
+		current = None
+		if class_name:
+			current = main.getSets()[class_name].get_score()
+		else:
+			# Grabs the current progress bar value
+			current = self.ids[progress_bar_id].value
+			# Increments value by 20%
+			if current < 1:
+				current += .20
 		# Update the value of the progress bar
 		self.ids[progress_bar_id].value = current
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
-	
+
+	def play_button_sound(self):
+		ProblemCards = App.get_running_app().root.get_screen("ProblemCards")
+		self.button_sound = SoundLoader.load('button.wav')
+		self.button_sound.loop = False
+		if ProblemCards.ids.volume.source == "volume.png":
+			self.button_sound.play()
+		else:
+			self.button_sound.stop()
+
 	def on_kv_post(self, *args):
 		self.load()
 	
 	def load(self):
-		pass
+		self.update_progressBar("pemdasProgressBar", "pemdasLabel", "Order of Operations")
 
 class MiddleSchool(Screen):
 	def update_progressBar(self, progress_bar_id, label_id, class_name: str = None):
@@ -173,6 +201,15 @@ class MiddleSchool(Screen):
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
 
+	def play_button_sound(self):
+		ProblemCards = App.get_running_app().root.get_screen("ProblemCards")
+		self.button_sound = SoundLoader.load('button.wav')
+		self.button_sound.loop = False
+		if ProblemCards.ids.volume.source == "volume.png":
+			self.button_sound.play()
+		else:
+			self.button_sound.stop()
+	
 	def on_kv_post(self, *args):
 		self.load()
 	
@@ -180,40 +217,86 @@ class MiddleSchool(Screen):
 		self.update_progressBar("fractionProgressBar", "fractionLabel", "Fractions")
 
 class HighSchool(Screen):
-	def update_progressBar(self, progress_bar_id, label_id):
-		# Grabs the current progress bar value
-		current = self.ids[progress_bar_id].value
-		# Increments value by 20%
-		if current < 1:
-			current += .20
+	def update_progressBar(self, progress_bar_id, label_id, class_name: str = None):
+		current = None
+		if class_name:
+			current = main.getSets()[class_name].get_score()
+		else:
+			# Grabs the current progress bar value
+			current = self.ids[progress_bar_id].value
+			# Increments value by 20%
+			if current < 1:
+				current += .20
 		# Update the value of the progress bar
 		self.ids[progress_bar_id].value = current
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
+
+	def play_button_sound(self):
+		ProblemCards = App.get_running_app().root.get_screen("ProblemCards")
+		self.button_sound = SoundLoader.load('button.wav')
+		self.button_sound.loop = False
+		if ProblemCards.ids.volume.source == "volume.png":
+			self.button_sound.play()
+		else:
+			self.button_sound.stop()
 	
 	def on_kv_post(self, *args):
 		self.load()
 	
 	def load(self):
-		pass
+		self.update_progressBar("quadraticProgressBar", "quadraticLabel", "Quadratics")
 
 class College(Screen):
-	def update_progressBar(self, progress_bar_id, label_id):
-		# Grabs the current progress bar value
-		current = self.ids[progress_bar_id].value
-		# Increments value by 20%
-		if current < 1:
-			current += .20
+	def update_progressBar(self, progress_bar_id, label_id, class_name: str = None):
+		current = None
+		if class_name:
+			current = main.getSets()[class_name].get_score()
+		else:
+			# Grabs the current progress bar value
+			current = self.ids[progress_bar_id].value
+			# Increments value by 20%
+			if current < 1:
+				current += .20
 		# Update the value of the progress bar
 		self.ids[progress_bar_id].value = current
 		# Update the Label
 		self.ids[label_id].text = f'{int(current*100)}%'
 
+	def play_button_sound(self):
+		ProblemCards = App.get_running_app().root.get_screen("ProblemCards")
+		self.button_sound = SoundLoader.load('button.wav')
+		self.button_sound.loop = False
+		if ProblemCards.ids.volume.source == "volume.png":
+			self.button_sound.play()
+		else:
+			self.button_sound.stop()
+
 	def on_kv_post(self, *args):
 		self.load()
 	
 	def load(self):
-		pass
+		self.update_progressBar("derivativesProgressBar", "derivativesLabel", "Derivatives")
+
+class UserManual(Screen):
+	def play_button_sound(self):
+		ProblemCards = App.get_running_app().root.get_screen("ProblemCards")
+		self.button_sound = SoundLoader.load('button.wav')
+		self.button_sound.loop = False
+		if ProblemCards.ids.volume.source == "volume.png":
+			self.button_sound.play()
+		else:
+			self.button_sound.stop()
+
+class HomeScreen(Screen):
+	def play_button_sound(self):
+		ProblemCards = App.get_running_app().root.get_screen("ProblemCards")
+		self.button_sound = SoundLoader.load('button.wav')
+		self.button_sound.loop = False
+		if ProblemCards.ids.volume.source == "volume.png":
+			self.button_sound.play()
+		else:
+			self.button_sound.stop()
 
 class WindowManager(ScreenManager):
 	pass
@@ -222,20 +305,29 @@ class WindowManager(ScreenManager):
 class RootWidget(ScreenManager):
 	pass
 
-kv = Builder.load_file('new_window.kv')
+kv = Builder.load_file('homeScreen.kv')
 # Builder.load_file("ProblemCards.kv")
 
 class LevelApp(App):
 	# for back button in ProblemCards.kv to return to previous screen
 	def __init__(self, **kwargs):
 		super(LevelApp, self).__init__(**kwargs)
-		self.previous_screen = ""
+		self.previous_screen = "" 
 
 	def build(self):
-		Loader.loading_image = "loading.png"
 		Window.clearcolor = (255, 255, 255)
 		return kv
 	
+	def toggleMusic(self):
+		ProblemCards = App.get_running_app().root.get_screen("ProblemCards")
+		ChooseLevel = App.get_running_app().root.get_screen("mathLevel")
+		if ProblemCards.ids.volume.source == "volume.png" or ChooseLevel.ids.volume.source == "volume.png":
+			ProblemCards.ids.volume.source = "mute.png"
+			ChooseLevel.ids.volume.source = "mute.png"
+		else:
+			ProblemCards.ids.volume.source = "volume.png"
+			ChooseLevel.ids.volume.source = "volume.png"
+
 	def on_stop(self):
 		main.save()
 		# save with pickle here
