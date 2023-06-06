@@ -72,7 +72,6 @@ class ProblemCards(Screen):
 		wrong_steps = problem.getCurrentWrongSteps()
 		for stepIndex, choiceIndex in enumerate(self.currentWrongChoices):
 			id = getattr(self.ids, f'answerChoice{choiceIndex+1}')
-			print(f"stepIndex: {stepIndex}")
 			loadInto(id, wrong_steps[stepIndex].step, f'choice{choiceIndex+1}')
 
 	# def loadWrongSteps(self):
