@@ -20,11 +20,6 @@ class ProblemSet():
         self.problems = tuple(new_args) # becomes immutable
         self.current = 0
 
-    def reset(self):
-        self.current = 0
-        for problem in self.getProblems():
-            problem.reset()
-
     def getProblems(self):
         return self.problems
 
@@ -38,13 +33,21 @@ class ProblemSet():
         self.current += 1
         return True
     
-    def save_score(self, num: int = None): # for saving
+    def reset(self):
+        self.current = 0
+        for problem in self.getProblems():
+            problem.reset()
+    
+    def save_score(self, num: int = None, override: bool = False): # for saving
         if not num:
             num = self.current
             if self.getCurrentProblem().isAtAnswer():
                 num += 1
         if 0 <= num <= len(self.problems):
+            if override is False and self.high_score_index >= num:
+                return False # cancel
             self.high_score_index = num
+            return num
         else:
             raise IndexError(f"num = {num}")
     
