@@ -20,19 +20,41 @@ WindowManager:
         spacing: "10dp"
         size: root.width, root.height
         
-        # added a back button go back to home screen (note: topic screen would be more reasonable)
-        Button:
-            text: "Go Back"
-            pos_hint: {'left': 1, 'top': 1}
-            size_hint: (0.22,0.22)
-            font_size: 14
-            on_release: 
-                # rooting this to the elementary topics screen for now since we are only working on completing Elementary for our MVP
-                app.root.current = app.previous_screen
-                root.manager.transition.direction = "right"
-                # reload the current screen to refresh it
-                root.manager.get_screen('ProblemCards').unload(True)
-                app.root.get_screen("middleSchool").update_progressBar("fractionProgressBar", "fractionLabel", "Fractions")
+        BoxLayout:
+            size_hint: (1, 0.5)
+            spacing: "150dp"
+
+            # added a back button go back to home screen (note: topic screen would be more reasonable)
+            Button:
+                text: "Go Back"
+                pos_hint: {'left': 1, 'top': 1}
+                size_hint: (0.5,0.5)
+                font_size: 14
+                on_release: 
+                    # rooting this to the elementary topics screen for now since we are only working on completing Elementary for our MVP
+                    app.root.current = app.previous_screen
+                    root.manager.transition.direction = "right"
+                    # reload the current screen to refresh it
+                    root.manager.get_screen('ProblemCards').unload(True)
+                    root.play_button_sound()
+                    # updates Progress Bar when button is pressed 
+                    app.root.get_screen("elementary").update_progressBar("pemdasProgressBar", "pemdasLabel", "Order of Operations")
+                    app.root.get_screen("middleSchool").update_progressBar("fractionProgressBar", "fractionLabel", "Fractions")
+                    app.root.get_screen("highSchool").update_progressBar("quadraticProgressBar", "quadraticLabel", "Quadratics")
+                    app.root.get_screen("college").update_progressBar("derivativesProgressBar", "derivativesLabel", "Derivatives")
+            
+            Toggle:
+                pos_hint: {'right': 1, 'top': 1}
+                size_hint: (0.5, 0.5)
+                on_release:
+                    app.toggleMusic()
+                Image:
+                    id: volume
+                    source: 'volume.png'
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    keep_ratio: True
 
 
         # using disabled rounded button to display question
@@ -67,6 +89,7 @@ WindowManager:
                 text: root.strA
                 on_release:
                     root.on_clickedButtonA()
+                    root.play_button_sound()
                 #   syntax for linking to another screen below
                 #   app.root.current = "screenName"
                 # Template to add images onto buttons: use this to add image for the answer choices
@@ -82,6 +105,7 @@ WindowManager:
                 text: root.strB
                 on_release:
                     root.on_clickedButtonB()
+                    root.play_button_sound()
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice2
@@ -99,6 +123,7 @@ WindowManager:
                 text: root.strC
                 on_release:
                     root.on_clickedButtonC()
+                    root.play_button_sound()
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice3
@@ -112,6 +137,7 @@ WindowManager:
                 text: root.strD
                 on_release:
                     root.on_clickedButtonD()
+                    root.play_button_sound()
                 # Template to add images onto buttons: use this to add image for the answer choices
                 Image:
                     id: answerChoice4
@@ -155,3 +181,15 @@ WindowManager:
             radius: [20]
     # wraps the text in the button so longer texts can be displayed
     text_size: self.width, None
+
+# Toggle for Music
+<Toggle@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (255, 255, 255, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [100]

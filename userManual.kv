@@ -10,6 +10,8 @@ WindowManager:
     name: "userManual"
 
     ScrollView:
+        do_scroll_x: False
+
         BoxLayout:
             orientation: 'vertical'
             size_hint_y: None
@@ -17,11 +19,20 @@ WindowManager:
             padding: ['10dp', '10dp', '10dp', '10dp']
             height: self.minimum_height
 
+            Button:
+                text: "Go Back"
+                size_hint: (None, None)
+                width: '70dp'
+                height: '40dp'
+                font_size: 14
+                on_press: 
+                    app.root.current = "homeScreen"
+                    root.manager.transition.direction = "right"
+                    root.play_button_sound()
+
             Label:
                 markup: True
                 text: "[b]User Manual[/b]"
-                halign: 'center'
-                valign: 'top'
                 color: (0,0,0,1)
                 size_hint: (1, None)
                 height: self.texture_size[1]

@@ -1,0 +1,83 @@
+#:kivy 2.1.0
+# include directive includes the contents of another .kv file
+#: include new_window.kv
+#: include userManual.kv
+
+# write screens here 
+WindowManager:
+    HomeScreen:
+    LevelWindow:
+    Elementary:
+    MiddleSchool:
+    HighSchool:
+    College:
+    UserManual:
+    ProblemCards:
+
+<HomeScreen>:
+    # making the choose your level screen 
+    name: "homeScreen"
+
+    Image:
+        source: 'background4.png'
+        y: self.parent.y
+        x: self.parent.x
+        size: self.parent.size
+        allow_stretch: True
+        keep_ratio: False
+
+    # making four buttons 
+    BoxLayout:
+        orientation: "vertical"
+        padding: "30dp"
+        spacing: "10dp"
+        size: root.width, root.height
+
+        Image:
+            source: 'MathletLogo.png'
+            y: self.parent.y
+            x: self.parent.x
+            size: self.parent.size
+            allow_stretch: True
+            keep_ratio: False
+        
+        BoxLayout:
+            orientation: "vertical"
+            spacing: "10dp"
+    
+            RoundedButtonHS:
+                text: "Math Levels"
+                font_size: 30
+                halign: 'center'
+                valign: 'center'
+                # click on button and it will change to a new screen
+                on_release:
+                    app.root.current = "mathLevel"
+                    root.manager.transition.direction = "left"
+                    root.play_button_sound()
+
+            RoundedButtonHS:
+                text: "User Manual"
+                font_size: 30
+                halign: 'center'
+                valign: 'center'
+                on_release:
+                    app.root.current = "userManual"
+                    root.manager.transition.direction = "left"
+                    root.play_button_sound()
+                    
+            
+
+# making rounded buttons
+<RoundedButtonHS@Button>
+    background_color:(0,0,0,0)
+    background_normal: ''
+    # canvas is a container for instructions. Use canvas.before to add instructions rendered before with self. 
+    canvas.before:
+        Color:
+            rgba: (76/255,92/255,165/255,0.8)
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            # change radius to change roundness of the button
+            radius: [25]

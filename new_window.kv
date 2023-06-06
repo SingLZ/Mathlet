@@ -13,7 +13,7 @@ WindowManager:
 
 <LevelWindow>:
     # making the choose your level screen 
-    name: "home"
+    name: "mathLevel"
 
     # making four buttons 
     BoxLayout:
@@ -21,6 +21,34 @@ WindowManager:
         padding: "30dp"
         spacing: "10dp"
         size: root.width, root.height
+
+        BoxLayout:
+            size_hint: (1, 0.5)
+            spacing: "150dp"
+
+            # added a back button go back to home screen (note: topic screen would be more reasonable)
+            Button:
+                text: "Go Back"
+                pos_hint: {'left': 1, 'top': 1}
+                size_hint: (0.35,0.40)
+                font_size: 14
+                on_release: 
+                    app.root.current = "homeScreen"
+                    root.manager.transition.direction = "right"
+                    root.play_button_sound()
+            
+            Toggle:
+                pos_hint: {'right': 1, 'top': 1}
+                size_hint: (0.5, 0.5)
+                on_release:
+                    app.toggleMusic()
+                Image:
+                    id: volume
+                    source: 'volume.png'
+                    y: self.parent.y
+                    x: self.parent.x
+                    size: self.parent.size
+                    keep_ratio: True
 
         Label:
             markup: True
@@ -44,6 +72,7 @@ WindowManager:
                 on_release:
                     app.root.current = "elementary"
                     root.manager.transition.direction = "left"
+                    root.play_button_sound()
 
             RoundedButton:
                 text: "Middle School\nMath"
@@ -53,6 +82,7 @@ WindowManager:
                 on_release:
                     app.root.current = "middleSchool"
                     root.manager.transition.direction = "left"
+                    root.play_button_sound()
 
         BoxLayout:
             orientation: "horizontal"
@@ -66,6 +96,7 @@ WindowManager:
                 on_release:
                     app.root.current = "highSchool"
                     root.manager.transition.direction = "left"
+                    root.play_button_sound()
 
             RoundedButton:
                 text: "College\nMath"
@@ -75,6 +106,7 @@ WindowManager:
                 on_release:
                     app.root.current = "college"
                     root.manager.transition.direction = "left"
+                    root.play_button_sound()
 
 # making rounded buttons for the levels of Math
 <RoundedButton@Button>
@@ -104,6 +136,18 @@ WindowManager:
             # change radius to change roundness of the button
             radius: [48]
 
+# Toggle for Music
+<Toggle@Button>
+    background_color: (0, 0, 0, 0)
+    background_normal: ''
+    canvas.before:
+        Color:
+            rgba: (255, 255, 255, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [100]
+
 # make other screens
 <Elementary>:
     # screen for elementary math 
@@ -121,8 +165,9 @@ WindowManager:
             size_hint: (0.22,0.22)
             font_size: 14
             on_release: 
-                app.root.current = "home"
+                app.root.current = "mathLevel"
                 root.manager.transition.direction = "right"
+                root.play_button_sound()
 
         RoundedButtonForTopic:
             text: "Order of Operations"
@@ -132,9 +177,7 @@ WindowManager:
                 app.root.current = "ProblemCards"
                 app.root.current_screen.reload('Order of Operations')
                 root.manager.transition.direction = "left"
-            # updates Progress Bar when button is pressed 
-            on_press:
-                app.root.get_screen("elementary").update_progressBar("pemdasProgressBar", "pemdasLabel")
+                root.play_button_sound()
 
         ProgressBar:
             id: pemdasProgressBar
@@ -161,6 +204,7 @@ WindowManager:
                 app.root.current = "ProblemCards"
                 #app.root.current_screen.reload('Perimeters and Areas of Polygons')
                 root.manager.transition.direction = "left"
+                root.play_button_sound()
             on_press:
                 app.root.get_screen("elementary").update_progressBar("roundNumProgressBar", "roundNumLabel")
         
@@ -197,9 +241,10 @@ WindowManager:
             size_hint: (0.22,0.22)
             font_size: 14
             on_release: 
-                app.root.current = "home"
+                app.root.current = "mathLevel"
                 root.manager.transition.direction = "right"
-        
+                root.play_button_sound()
+
         RoundedButtonForTopic:
             text: "Fractions"
             font_size: 20
@@ -208,7 +253,7 @@ WindowManager:
                 app.root.current = "ProblemCards"
                 app.root.current_screen.reload('Fractions')
                 root.manager.transition.direction = "left"
-            # updates Progress Bar when button is pressed 
+                root.play_button_sound()
         
         ProgressBar:
             id: fractionProgressBar
@@ -235,6 +280,7 @@ WindowManager:
                 app.root.current = "ProblemCards"
                 #app.root.current_screen.reload('Solving Equations With\nOne Unknown')
                 root.manager.transition.direction = "left"
+                root.play_button_sound()
             # updates Progress Bar when button is pressed 
             on_press:
                 app.root.get_screen("middleSchool").update_progressBar("oneUnknownProgressBar", "oneUnknownLabel")
@@ -272,8 +318,9 @@ WindowManager:
             size_hint: (0.22,0.22)
             font_size: 14
             on_release: 
-                app.root.current = "home"
+                app.root.current = "mathLevel"
                 root.manager.transition.direction = "right"
+                root.play_button_sound()
 
         RoundedButtonForTopic:
             text: "Quadratic Equations\nwith Real Solutions"
@@ -283,9 +330,7 @@ WindowManager:
                 app.root.current = "ProblemCards"
                 app.root.current_screen.reload('Quadratics')
                 root.manager.transition.direction = "left"
-            # updates Progress Bar when button is pressed 
-            on_press:
-                app.root.get_screen("highSchool").update_progressBar("quadraticProgressBar", "quadraticLabel")
+                root.play_button_sound()
         
         ProgressBar:
             id: quadraticProgressBar
@@ -312,6 +357,7 @@ WindowManager:
                 app.root.current = "ProblemCards"
                 #app.root.current_screen.reload('Logarithms')
                 root.manager.transition.direction = "left"
+                root.play_button_sound()
             # updates Progress Bar when button is pressed 
             on_press:
                 app.root.get_screen("highSchool").update_progressBar("logProgressBar", "logLabel")
@@ -349,8 +395,9 @@ WindowManager:
             size_hint: (0.22,0.22)
             font_size: 14
             on_release: 
-                app.root.current = "home"
+                app.root.current = "mathLevel"
                 root.manager.transition.direction = "right"
+                root.play_button_sound()
 
         RoundedButtonForTopic:
             text: "Derivatives"
@@ -360,9 +407,7 @@ WindowManager:
                 app.root.current = "ProblemCards"
                 app.root.current_screen.reload('Derivatives')
                 root.manager.transition.direction = "left"
-            # updates Progress Bar when button is pressed 
-            on_press:
-                app.root.get_screen("college").update_progressBar("derivativesProgressBar", "derivativesLabel")
+                root.play_button_sound()
         
         ProgressBar:
             id: derivativesProgressBar
@@ -389,6 +434,7 @@ WindowManager:
                 app.root.current = "ProblemCards"
                 #app.root.current_screen.reload('Integrals')
                 root.manager.transition.direction = "left"
+                root.play_button_sound()
             # updates Progress Bar when button is pressed 
             on_press:
                 app.root.get_screen("college").update_progressBar("integralsProgressBar", "integralsLabel")
