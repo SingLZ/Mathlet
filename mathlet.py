@@ -1,6 +1,6 @@
 from kivy.app import App
 from kivy.loader import Loader
-from kivy.uix.widget import Widget
+from kivy.uix.widget import Widget 
 from kivy.uix.image import Image
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen
