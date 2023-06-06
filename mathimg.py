@@ -11,8 +11,11 @@ from timeit import default_timer
 font_manager.FontProperties('cm')
 
 mpl.rcParams.update(mpl.rcParamsDefault) 
+# mpl.rcParams['text.antialiased'] = True
+# mpl.rcParams['axes.edgecolor'] = 'white'
+# mpl.rcParams['axes.linewidth'] = 0.5
 mpl.rcParams['savefig.transparent'] = True
-mpl.rcParams['text.usetex'] = True # turn off temporarily if causing problems
+mpl.rcParams['text.usetex'] = False # turn off temporarily if causing problems
 mpl.use('Agg') # Set backend to Agg
 
 texFont = font_manager.FontProperties(size=30, family='serif', math_fontfamily='cm')
@@ -73,7 +76,7 @@ def fill(text, width=70):
 
     return result
 
-def make_img(txt: str, fileName: str = 'output', format: str = 'png', customDpi: int = 300, color: str = 'White'):
+def make_img(txt: str, fileName: str = 'output', format: str = 'png', customDpi: int = 150, color: str = 'White'):
     txt = fill(txt, 20)
     fig.text(0.5, 0.5, txt, color=color, fontsize=texFont.get_size_in_points(), fontproperties=texFont, verticalalignment='center', horizontalalignment='center')
     fileName += f'.{format}'
@@ -83,7 +86,7 @@ def make_img(txt: str, fileName: str = 'output', format: str = 'png', customDpi:
     return fileName
 
 # make_img is the fastest, but make_bytes is the best for network connectivity, so only use if transferring images
-def make_bytes(txt: str, fileName: str = 'output', format: str = 'png', customDpi: int = 300, color: str = 'White'):
+def make_bytes(txt: str, fileName: str = 'output', format: str = 'png', customDpi: int = 150, color: str = 'White'):
     fig.text(0.5, 0.5, txt, color=color, fontsize=texFont.get_size_in_points(), fontproperties=texFont, verticalalignment='center', horizontalalignment='center')
 
     buf = io.BytesIO()
